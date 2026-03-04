@@ -1,6 +1,10 @@
 import java.time.LocalDate;
 import java.time.Period;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;  
+
+
 
 class Patient {
    static final int RETURN      = 0;
@@ -15,6 +19,7 @@ class Patient {
    double WEIGHT;
    double LENGTH;
 
+List<String> medications = new ArrayList<>();
 
     /**
      * Constructor
@@ -26,6 +31,7 @@ class Patient {
         this.dateOfBirth = dateOfBirth;
         this.WEIGHT = WEIGHT;
         this.LENGTH = LENGTH;
+        this.medications = new ArrayList<>();
     }
 
     public int getAge(){
@@ -43,6 +49,10 @@ class Patient {
     /**
      * Display patient data.
      */
+    void addMedication(String medicationname){
+        this.medications.add(medicationname);
+    }
+
     void viewData() {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
@@ -53,6 +63,7 @@ class Patient {
         System.out.format("%-17s %s\n", "Age:", getAge()); 
         System.out.format("%-17s %s\n", "Weight:", WEIGHT);
         System.out.format("%-17s %s\n", "Length:", LENGTH);
+        System.out.format("%-17s %s\n", "Medication", medications.isEmpty() ? "None" : String.join(", ", medications));
         System.out.format("%-17s %.1f\n", "BMI:", (WEIGHT)/(LENGTH*LENGTH)); //%.1f\n is afronden op 1 decimaal
     }
 

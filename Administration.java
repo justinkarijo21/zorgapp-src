@@ -15,8 +15,9 @@ import java.util.Scanner;
 class Administration {
     static final int STOP = 0;
     static final int VIEW = 1;
-    static final int PatientList = 2; 
-    static final int Quickselect = 3; 
+    static final int PATIENTLIST = 2; 
+    static final int QUICKSELECT = 3; 
+    static final int ADD_MEDICATION = 4;
    
     List<Patient> allPatients = new ArrayList<>();
     
@@ -53,8 +54,9 @@ class Administration {
             */
             System.out.format("%d:  STOP\n", STOP);
             System.out.format("%d:  View patient data\n", VIEW);
-            System.out.format("%d:  Show patient list\n", PatientList);// gebruik dit om eigen patient id in tevoeren en van daaruit info. alleen naam en geboortedatum en van daaruit kiezen.
-            System.out.format("%d:  Quick select patient id\n", Quickselect);
+            System.out.format("%d:  Show patient list\n", PATIENTLIST);// gebruik dit om eigen patient id in tevoeren en van daaruit info. alleen naam en geboortedatum en van daaruit kiezen.
+            System.out.format("%d:  Quick select patient id\n", QUICKSELECT);
+            System.out.format("%d:  Add medication to current patient\n", ADD_MEDICATION);
             System.out.print("Enter your choice: ");
             
             if (scanner.hasNextInt()){ //belangrijk voor letterinput
@@ -73,12 +75,16 @@ class Administration {
                     currentPatient.viewData();
                     break;
 
-                case PatientList:
+                case PATIENTLIST:
                     showAndSelectPatient(scanner); 
                     break;
                
-                case Quickselect:
+                case QUICKSELECT:
                     QuickPatient(scanner);
+                    break;
+
+                case ADD_MEDICATION:
+                    addMedicationToPatient(scanner);
                     break;
 
 
@@ -156,5 +162,20 @@ class Administration {
                             scanpatient.next(); // Clear de foute input         
                          } 
                             
+    }
+
+    void addMedicationToPatient (Scanner Meds) {
+            System.out.println("\nAdding medication for: " + currentPatient.fullName());
+            System.out.print("Enter medication name: ");
+            
+                Meds.nextLine(); 
+                String medName = Meds.nextLine();
+
+                if (!medName.trim().isEmpty()) {
+                    currentPatient.addMedication(medName);
+                    System.out.println("Successfully added: " + medName);
+                } else {
+                    System.out.println("Error: Medication name cannot be empty.");
+                    }   
     }
 }
