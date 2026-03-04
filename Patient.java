@@ -1,5 +1,6 @@
 import java.time.LocalDate;
 import java.time.Period;
+import java.time.format.DateTimeFormatter;
 
 class Patient {
    static final int RETURN      = 0;
@@ -43,10 +44,12 @@ class Patient {
      * Display patient data.
      */
     void viewData() {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+
         System.out.format("===== Patient id=%d ==============================\n", id);
         System.out.format("%-17s %s\n", "Surname:", surname);
         System.out.format("%-17s %s\n", "First Name:", firstName);
-        System.out.format("%-17s %s\n", "Date of birth:", dateOfBirth);
+        System.out.format("%-17s %s\n", "Date of birth:", dateOfBirth.format(formatter));
         System.out.format("%-17s %s\n", "Age:", getAge()); 
         System.out.format("%-17s %s\n", "Weight:", WEIGHT);
         System.out.format("%-17s %s\n", "Length:", LENGTH);
@@ -57,6 +60,8 @@ class Patient {
      * Shorthand for a Patient's full name
      */
     String fullName() {
-        return String.format("%s %s [%s]", firstName, surname, dateOfBirth.toString());
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+
+        return String.format("%s %s [%s]", firstName, surname, dateOfBirth.format(formatter));
     }
 }
