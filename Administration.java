@@ -261,6 +261,14 @@ class Administration {
             currentPatient.LENGTH = Double.parseDouble(lengthInput);
             }
 
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+            System.out.print("Date of Birth [" + currentPatient.dateOfBirth.format(formatter) +  "] (dd-MM-yyyy): ");
+            String dateEdit = edit.nextLine();
+            
+            if (!dateEdit.isEmpty()) {
+            currentPatient.dateOfBirth = LocalDate.parse(dateEdit, formatter);
+            }
+
             System.out.println("\n    Patient data succesfully updated!");
     }
 }
