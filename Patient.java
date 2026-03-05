@@ -75,4 +75,6 @@ List<String> medications = new ArrayList<>();
 
         return String.format("%s %s [%s]", firstName, surname, dateOfBirth.format(formatter));
     }
+
+
 }

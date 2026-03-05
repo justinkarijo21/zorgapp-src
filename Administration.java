@@ -15,9 +15,12 @@ import java.util.Scanner;
 class Administration {
     static final int STOP = 0;
     static final int VIEW = 1;
-    static final int PATIENTLIST = 2; 
-    static final int QUICKSELECT = 3; 
-    static final int ADD_MEDICATION = 4;
+    static final int QUICKSELECT = 2; 
+    static final int EDIT_PATIENTDATA = 3;
+    static final int PATIENTLIST = 4; 
+    static final int ADD_MEDICATION = 5;
+    static final int EDIT_MEDICATION = 6;
+    
    
     List<Patient> allPatients = new ArrayList<>();
     
@@ -54,9 +57,11 @@ class Administration {
             */
             System.out.format("%d:  STOP\n", STOP);
             System.out.format("%d:  View patient data\n", VIEW);
-            System.out.format("%d:  Show patient list\n", PATIENTLIST);// gebruik dit om eigen patient id in tevoeren en van daaruit info. alleen naam en geboortedatum en van daaruit kiezen.
             System.out.format("%d:  Quick select patient id\n", QUICKSELECT);
+            System.out.format("%d:  Edit current patient data\n", EDIT_PATIENTDATA);
+            System.out.format("%d:  Show patient list\n", PATIENTLIST);// gebruik dit om eigen patient id in tevoeren en van daaruit info. alleen naam en geboortedatum en van daaruit kiezen.
             System.out.format("%d:  Add medication to current patient\n", ADD_MEDICATION);
+            System.out.format("%d:  EDIT medication to current patient\n", EDIT_MEDICATION);
             System.out.print("Enter your choice: ");
             
             if (scanner.hasNextInt()){ //belangrijk voor letterinput
@@ -71,22 +76,29 @@ class Administration {
                         System.out.println("Succesfully logged out, you may close this screen");
                     break;
 
+                case QUICKSELECT:
+                    QuickPatient(scanner);
+                    break;
+
                 case VIEW:
                     currentPatient.viewData();
+                    break;
+
+                case EDIT_PATIENTDATA:
+                    editPatientData(scanner);
                     break;
 
                 case PATIENTLIST:
                     showAndSelectPatient(scanner); 
                     break;
                
-                case QUICKSELECT:
-                    QuickPatient(scanner);
-                    break;
-
                 case ADD_MEDICATION:
                     addMedicationToPatient(scanner);
                     break;
-
+                
+                case EDIT_MEDICATION:
+                    EditMedication(scanner);
+                    break;
 
                 default:
                     System.out.println("Please enter a *valid* digit");
@@ -164,18 +176,91 @@ class Administration {
                             
     }
 
-    void addMedicationToPatient (Scanner Meds) {
+    void addMedicationToPatient (Scanner Meds) { // voegt medication toe aan een patient
             System.out.println("\nAdding medication for: " + currentPatient.fullName());
+            
             System.out.print("Enter medication name: ");
             
                 Meds.nextLine(); 
                 String medName = Meds.nextLine();
 
                 if (!medName.trim().isEmpty()) {
-                    currentPatient.addMedication(medName);
-                    System.out.println("Successfully added: " + medName);
+                    System.out.print("Enter dosage (example, 500mg, 2 tablets): "); //voegt dosage toe aan patient
+                    String dosage = Meds.nextLine();
+
+                if (!dosage.trim().isEmpty()) {
+                    String fullMed = medName + " (" + dosage + ")";
+                    currentPatient.addMedication(fullMed);
+                    System.out.println("Successfully added: " + fullMed);
                 } else {
-                    System.out.println("Error: Medication name cannot be empty.");
+                    System.out.println("Error: Dosage cannot be empty");
                     }   
+                } else {
+                    System.out.println("Error: Medication cannot be empty");
+                }
+    }
+
+    void EditMedication (Scanner Editmedication){ //past medicatie van patient aan
+        System.out.println("\nEditing medication for: " + currentPatient.fullName());
+
+            List<String> meds = currentPatient.medications;
+            if (meds.isEmpty()) {
+                System.out.println("No medication to edit.");
+                return;
+            }
+
+            for (int i = 0; i < meds.size(); i++) {
+                System.out.println((i + 1) + ". " + meds.get(i));
+            }
+
+            System.out.print("\nWhich number do you want to edit? ");
+            int index = Editmedication.nextInt() - 1;
+            Editmedication.nextLine(); 
+
+            if (index >= 0 && index < meds.size()) {
+                String currentFullMed = meds.get(index);
+                System.out.println("Current: " + currentFullMed);
+
+                System.out.print("Enter new name (press Enter to keep current): ");
+                String newName = Editmedication.nextLine();
+                
+                System.out.print("Enter new dosage (press Enter to keep current): ");
+                String newDosage = Editmedication.nextLine();
+
+                // Alleen aanpassen als er iets getypt is, anders behoud je de oude
+                if (!newName.isEmpty() || !newDosage.isEmpty()) {
+                    
+                    String updatedEntry = (newName.isEmpty() ? "OldName" : newName) + " (" + (newDosage.isEmpty() ? "OldDosage" : newDosage) + ")";
+                    currentPatient.medications.set(index, updatedEntry);
+                    System.out.println("Updated!");
+                }
+            }
+    }
+
+    void editPatientData (Scanner edit) {
+        System.out.println("\n--- Editing Patient ID: " + currentPatient.id + " (ID can't be changed, PRESS ENTER TO KEEP THE SAME INFO) ---");
+        edit.nextLine();
+
+            System.out.print("Surname [" + currentPatient.surname + "]: "); //achternaam bewerken
+            String newSurname = edit.nextLine();
+            if (!newSurname.isEmpty()) currentPatient.surname = newSurname;
+
+            System.out.print("Firstname [" + currentPatient.firstName + "]: "); //voornaam bewerken
+            String newFirstname = edit.nextLine();
+            if (!newFirstname.isEmpty()) currentPatient.firstName = newFirstname;
+
+            System.out.print("Weight [" + currentPatient.WEIGHT + "]: "); //gewicht bewerken
+            String weightInput = edit.nextLine();
+            if (!weightInput.isEmpty()) {
+            currentPatient.WEIGHT = Double.parseDouble(weightInput);
+            }
+
+            System.out.print("Length [" + currentPatient.LENGTH + "]: "); //lengte bewerken
+            String lengthInput = edit.nextLine();
+            if (!lengthInput.isEmpty()) {
+            currentPatient.LENGTH = Double.parseDouble(lengthInput);
+            }
+
+            System.out.println("\n    Patient data succesfully updated!");
     }
 }
