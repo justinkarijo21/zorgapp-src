@@ -20,6 +20,7 @@ class Administration {
     static final int PATIENTLIST = 4; 
     static final int ADD_MEDICATION = 5;
     static final int EDIT_MEDICATION = 6;
+    static final int DELETE_MEDICATION = 7;
     
    
     List<Patient> allPatients = new ArrayList<>();
@@ -62,6 +63,7 @@ class Administration {
             System.out.format("%d:  Show patient list\n", PATIENTLIST);// gebruik dit om eigen patient id in tevoeren en van daaruit info. alleen naam en geboortedatum en van daaruit kiezen.
             System.out.format("%d:  Add medication to current patient\n", ADD_MEDICATION);
             System.out.format("%d:  EDIT medication to current patient\n", EDIT_MEDICATION);
+            System.out.format("%d:  DELETE medication to current patient\n", DELETE_MEDICATION);
             System.out.print("Enter your choice: ");
             
             if (scanner.hasNextInt()){ //belangrijk voor letterinput
@@ -98,6 +100,10 @@ class Administration {
                 
                 case EDIT_MEDICATION:
                     EditMedication(scanner);
+                    break;
+
+                case DELETE_MEDICATION:
+                    DeleteMed(scanner);
                     break;
 
                 default:
@@ -271,4 +277,37 @@ class Administration {
 
             System.out.println("\n    Patient data succesfully updated!");
     }
+
+    void DeleteMed(Scanner scanner) {
+        System.out.println("\nDeleting medication for: " + currentPatient.fullName());
+
+        List<String> meds = currentPatient.medications;
+
+        if (meds.isEmpty()) {
+            System.out.println("No medication to delete.");
+            return;
+        }
+
+        // toon lijst
+        for (int i = 0; i < meds.size(); i++) {
+            System.out.println((i + 1) + ". " + meds.get(i));
+        }
+
+        System.out.print("\nWhich number do you want to delete? ");
+
+        if (scanner.hasNextInt()) {
+            int index = scanner.nextInt() - 1;
+
+            if (index >= 0 && index < meds.size()) {
+                String removed = meds.remove(index);
+                System.out.println("Removed medication: " + removed);
+            } else {
+                System.out.println("Invalid number.");
+            }
+        } else {
+            System.out.println("Invalid input.");
+            scanner.next();
+                }
+                    }
+
 }
