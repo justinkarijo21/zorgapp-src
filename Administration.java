@@ -31,6 +31,7 @@ class Administration {
     /**
      * Constructor
      */
+
     Administration(User user) {
         currentUser = user;
        
