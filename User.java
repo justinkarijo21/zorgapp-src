@@ -35,7 +35,7 @@ class Huisarts extends User{
         @Override
          public void Dashboard() {
         System.out.println("DASHBOARD HUISARTS: " + getUserName());
-        System.out.println("\n- Open Patientfiles");
+        System.out.println("\n- Your Patient options");
     }
 }
 
@@ -46,7 +46,7 @@ class Fysio extends User{
         @Override
         public void Dashboard(){
             System.out.println("DASHBOARD FYSIO: " + getUserName());
-            System.out.println("\n- Open Patientfiles");
+            System.out.println("\n- Your Patient options");
         }
     
 }
@@ -57,7 +57,7 @@ class Apotheker extends User{
         @Override
         public void Dashboard(){
             System.out.println("DASHBOARD APOTHEKER: " + getUserName());
-            System.out.println("\n- Open Patientfiles");
+            System.out.println("\n- Your Patient options");
         }
     
 }
@@ -69,7 +69,7 @@ class Tandarts extends User{
         @Override
         public void Dashboard(){
             System.out.println("DASHBOARD TANDARTS: " + getUserName());
-            System.out.println("\n- Open Patientfiles");
+            System.out.println("\n- Your Patient options");
         }
     
 }

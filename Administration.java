@@ -47,11 +47,13 @@ class Administration {
         System.out.format("Logged in as: %s\n", currentUser.getUserName());
         System.out.format("Function:      %s\n", currentUser.getClass().getSimpleName()); // Laat zien welk type kind-klasse het is
         System.out.println("=".repeat(30));
-        
+
         System.out.format("Current user: [%d] %s\n", user.getUserID(), user.getUserName());
     }
 
     void menu() {
+        currentUser.Dashboard();
+
         var scanner = new Scanner(System.in);  // User input via this scanner.
         boolean nextCycle = true;
        

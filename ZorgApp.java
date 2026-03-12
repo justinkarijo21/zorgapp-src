@@ -37,6 +37,7 @@ public class ZorgApp {
 
         Administration administration = new Administration(loggedinUser);
         administration.menu();
+    
     }
 }
 
