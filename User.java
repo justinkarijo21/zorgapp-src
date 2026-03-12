@@ -1,12 +1,18 @@
+enum Rol {
+    HUISARTS, APOTHEKER, FYSIONTHERAPEUT, TANDARTS
+}
+
 class User {
     String userName;
     int userID;
+    Rol rol;
 
-    public User(int id, String name) {
+    public User(int id, String name, Rol rol) {
         this.userID = id;
         this.userName = name;
+        this.rol = rol;
     }
-//aaaa
+
 
     String getUserName() {
         return userName;
@@ -15,4 +21,10 @@ class User {
     int getUserID() {
         return userID;
     }
+
+    Rol getRol(){
+        return rol;
+    }
+
+    
 }
