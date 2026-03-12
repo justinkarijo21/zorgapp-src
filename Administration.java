@@ -33,7 +33,7 @@ class Administration {
      */
 
     Administration(User user) {
-        currentUser = user;
+        this.currentUser = user;
        
         allPatients.add (new Patient(9001, "Van Puffelen", "Pierre", LocalDate.of(2000, 2, 29), 75.7, 1.73));
         allPatients.add (new Patient(9002, "Ekkelon", "Jasmijn", LocalDate.of( 2001,  3,22 ),75.8, 1.78));
@@ -43,6 +43,11 @@ class Administration {
         allPatients.add (new Patient(9006, "Van Bussum", "Mark", LocalDate.of(1987, 1, 25), 89.2, 1.95));
 
         currentPatient = allPatients.get(0);
+        System.out.println("=".repeat(30));
+        System.out.format("Logged in as: %s\n", currentUser.getUserName());
+        System.out.format("Function:      %s\n", currentUser.getClass().getSimpleName()); // Laat zien welk type kind-klasse het is
+        System.out.println("=".repeat(30));
+        
         System.out.format("Current user: [%d] %s\n", user.getUserID(), user.getUserName());
     }
 
