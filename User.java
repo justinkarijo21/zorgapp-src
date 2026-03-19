@@ -33,6 +33,10 @@ public class User {
     public boolean canEditMedication() {
         return false;
     }
+
+    public boolean canAddMedication() {
+        return false;
+    }
 }
     
 //classes rollen
@@ -55,7 +59,11 @@ class Huisarts extends User{
     public boolean canEditMedication() {
         return false;
     }
-}
+
+    @Override
+    public boolean canAddMedication() {
+        return false;
+}}
 
 class Fysio extends User{
     public Fysio (int id, String name){
@@ -66,7 +74,7 @@ class Fysio extends User{
             System.out.println("DASHBOARD FYSIO: " + getUserName());
             System.out.println("\n- Your Patient options");
         }
-
+    
     @Override
     public boolean canViewMedication() {
         return true;
@@ -76,7 +84,12 @@ class Fysio extends User{
     public boolean canEditMedication() {
         return false;
     }
-}
+
+    @Override
+    public boolean canAddMedication() {
+        return false;
+}}
+
 class Apotheker extends User{
     public Apotheker (int id, String name){
         super(id, name);
@@ -96,7 +109,11 @@ class Apotheker extends User{
     public boolean canEditMedication() {
         return true;
     }
-}
+
+    @Override
+    public boolean canAddMedication() {
+        return true;   
+}}
 
 class Tandarts extends User{
     public Tandarts (int id, String name){
@@ -107,7 +124,6 @@ class Tandarts extends User{
             System.out.println("DASHBOARD TANDARTS: " + getUserName());
             System.out.println("\n- Your Patient options");
         }
-    
 }
 
 
