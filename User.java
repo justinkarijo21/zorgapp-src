@@ -1,4 +1,4 @@
-
+import java.util.Scanner;
 public class User {
     protected String userName;
     protected int userID;
@@ -37,7 +37,15 @@ public class User {
     public boolean canAddMedication() {
         return false;
     }
+
+public void selectOtherUser(Scanner scanner, Account account, Administration admin) {
+        System.out.println("\n--- Select another user ---");
+        System.out.println("Available users:");
+        for (User u : account.allUsers) {
+            System.out.format("[%d] %s (%s)\n", u.getUserID(), u.getUserName(), u.getClass().getSimpleName());
 }
+    }
+        }
     
 //classes rollen
 class Huisarts extends User{

@@ -10,13 +10,14 @@ import java.util.Scanner;
  */
 public class Administration {
     static final int STOP = 0;
-    static final int VIEW = 1;
-    static final int QUICKSELECT = 2; 
-    static final int EDIT_PATIENTDATA = 3;
-    static final int PATIENTLIST = 4; 
-    static final int ADD_MEDICATION = 5;
-    static final int EDIT_MEDICATION = 6;
-    static final int DELETE_MEDICATION = 7;
+    static final int OTHERUSER = 1;
+    static final int VIEW = 2;
+    static final int QUICKSELECT = 3; 
+    static final int EDIT_PATIENTDATA = 4;
+    static final int PATIENTLIST = 5; 
+    static final int ADD_MEDICATION = 6;
+    static final int EDIT_MEDICATION = 7;
+    static final int DELETE_MEDICATION = 8;
     
     PATIENTLIST patientList = new PATIENTLIST();
     Patient currentPatient;            // The currently selected patient
@@ -46,6 +47,11 @@ public class Administration {
                 case STOP: // interrupt the loop
                     nextCycle = false;
                         MenuPrinter.logOutMessage();
+                    break;
+
+                case OTHERUSER:
+                    currentUser.selectOtherUser(scanner, new Account(), this);
+                    MenuPrinter.Header(currentUser);
                     break;
 
                 case QUICKSELECT:

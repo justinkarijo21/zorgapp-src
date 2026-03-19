@@ -4,8 +4,8 @@ import java.util.Scanner;
 
 public class Account {
 
-    private final List<User> allUsers;
-    private User currentUser;
+    public final List<User> allUsers;
+    public User currentUser;
 
     public Account() {
         allUsers = new ArrayList<>();
