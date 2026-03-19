@@ -25,6 +25,14 @@ public class User {
     public void Dashboard (){
         System.out.println("Loading Dashboard");
     }
+
+    public boolean canViewMedication() {
+        return false;
+    }
+
+    public boolean canEditMedication() {
+        return false;
+    }
 }
     
 //classes rollen
@@ -37,6 +45,16 @@ class Huisarts extends User{
         System.out.println("DASHBOARD HUISARTS: " + getUserName());
         System.out.println("\n- Your Patient options");
     }
+
+    @Override
+    public boolean canViewMedication() {
+        return true;
+    }
+
+    @Override
+    public boolean canEditMedication() {
+        return false;
+    }
 }
 
 class Fysio extends User{
@@ -48,7 +66,16 @@ class Fysio extends User{
             System.out.println("DASHBOARD FYSIO: " + getUserName());
             System.out.println("\n- Your Patient options");
         }
-    
+
+    @Override
+    public boolean canViewMedication() {
+        return true;
+    }
+
+    @Override
+    public boolean canEditMedication() {
+        return false;
+    }
 }
 class Apotheker extends User{
     public Apotheker (int id, String name){
@@ -59,7 +86,16 @@ class Apotheker extends User{
             System.out.println("DASHBOARD APOTHEKER: " + getUserName());
             System.out.println("\n- Your Patient options");
         }
-    
+
+    @Override
+    public boolean canViewMedication() {
+        return true;
+    }
+
+    @Override
+    public boolean canEditMedication() {
+        return true;
+    }
 }
 
 class Tandarts extends User{

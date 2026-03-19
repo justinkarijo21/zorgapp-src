@@ -37,7 +37,7 @@ public class Administration {
         boolean nextCycle = true;
        
         while (nextCycle) {
-           MenuPrinter.printMainmenu(currentPatient);
+           MenuPrinter.printMainmenu(currentPatient, currentUser);
             
             if (scanner.hasNextInt()){ //belangrijk voor letterinput
             int choice = scanner.nextInt();
@@ -53,7 +53,11 @@ public class Administration {
                     break;
 
                 case VIEW:
-                    currentPatient.viewData();
+                    if (currentUser.canViewMedication()) {
+                        currentPatient.viewData();
+                    } else {
+                        System.out.println("Permission Denied");
+                    }
                     break;
 
                 case EDIT_PATIENTDATA:
@@ -65,15 +69,27 @@ public class Administration {
                     break;
                
                 case ADD_MEDICATION:
-                    Medication.addMedicationToPatient(scanner, currentPatient);
+                    if (currentUser.canEditMedication()) {
+                        Medication.addMedicationToPatient(scanner, currentPatient);
+                    } else {
+                        System.out.println("Permission Denied");
+                    }
                     break;
                 
                 case EDIT_MEDICATION:
-                    Medication.EditMedication(scanner, currentPatient);
+                    if (currentUser.canEditMedication()) {
+                        Medication.EditMedication(scanner, currentPatient);
+                    } else {
+                        System.out.println("Permission Denied");
+                    }
                     break;
 
                 case DELETE_MEDICATION:
-                    Medication.DeleteMed(scanner, currentPatient);
+                    if (currentUser.canEditMedication()) {
+                        Medication.DeleteMed(scanner, currentPatient);
+                    } else {
+                        System.out.println("Permission Denied");
+                    }
                     break;
 
                 default:

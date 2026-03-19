@@ -7,7 +7,7 @@ public class MenuPrinter {
         System.out.format("Current user: [%d] %s\n", currentUser.getUserID(), currentUser.getUserName());
     }
 
-    public static void printMainmenu(Patient currentPatient){
+    public static void printMainmenu(Patient currentPatient, User currentUser){
  System.out.format("%s\n", "=".repeat(80));
             System.out.format("Current patient: %s\n", currentPatient.fullName());
 
@@ -17,9 +17,11 @@ public class MenuPrinter {
             System.out.println("2:  Quick select patient id\n");
             System.out.println("3:  Edit current patient data\n");
             System.out.println("4:  Show patient list\n");// gebruik dit om eigen patient id in tevoeren en van daaruit info. alleen naam en geboortedatum en van daaruit kiezen.
-            System.out.println("5:  Add medication to current patient\n");
-            System.out.println("6:  EDIT medication to current patient\n" );
-            System.out.println("7:  DELETE medication to current patient\n");
+            if (currentUser.canEditMedication()) {
+                System.out.println("5:  Add medication to current patient\n");
+                System.out.println("6:  EDIT medication to current patient\n" );
+                System.out.println("7:  DELETE medication to current patient\n");
+            }
             System.out.print("Enter your choice: ");
     }
 

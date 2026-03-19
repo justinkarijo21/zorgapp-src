@@ -15,10 +15,7 @@ public class Account {
         allUsers.add(new Tandarts(4001, "Mvr. Spa"));
     }
 
-    /**
-     * Prompts the user to enter their user id and returns the selected User.
-     * Returns null when the selection is invalid.
-     */
+    
     public User login(Scanner scanner) {
         System.out.println("--- WELCOME IN THE ZORGAPP ---");
         System.out.println("Available users:");
