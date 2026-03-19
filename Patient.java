@@ -2,7 +2,8 @@ import java.time.LocalDate;
 import java.time.Period;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.List;  
+import java.util.List;
+import java.util.Scanner;
 
 
 
@@ -55,10 +56,39 @@ List<String> consultNotes = new ArrayList<>();
         this.medications.add(medicationname);
     }
 
-    void addConsultNote(String note){
-        this.consultNotes.add(note);
+    void addConsultNote(LocalDate date, String note){
+        String formatted = date.format(DateTimeFormatter.ofPattern("dd/MM/yyyy")) + ": " + note;
+        this.consultNotes.add(formatted);
     }
 
+    void addConsultNoteInput(Scanner scanner) {
+        if (scanner.hasNextLine()) {
+            scanner.nextLine();
+        }
+
+        System.out.println("Enter consult date (dd/MM/yyyy) or leave empty for today:");
+        String dateInput = scanner.nextLine().trim();
+        LocalDate consultDate = LocalDate.now();
+        if (!dateInput.isEmpty()) {
+            try {
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+                consultDate = LocalDate.parse(dateInput, formatter);
+            } catch (java.time.format.DateTimeParseException e) {
+                System.out.println("Invalid date format, using today.");
+            }
+        }
+
+        System.out.println("Enter consult note:");
+        String note = scanner.nextLine().trim();
+        if (note.isEmpty()) {
+            System.out.println("No note entered, cancelled.");
+            return;
+        }
+
+        addConsultNote(consultDate, note);
+        System.out.println("Consult note added.");
+    }
+    
     void viewData() {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 

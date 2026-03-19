@@ -100,11 +100,7 @@ public class Administration {
                     break;
 
                 case ADD_CONSULT:
-                    System.out.println("Enter consult note:");
-                    scanner.nextLine(); // consume newline
-                    String note = scanner.nextLine();
-                    currentPatient.addConsultNote(note);
-                    System.out.println("Consult note added.");
+                    currentPatient.addConsultNoteInput(scanner);
                     break;
 
                 default:
