@@ -22,19 +22,12 @@ public class Administration {
     Patient currentPatient;            // The currently selected patient
     User currentUser;               // the current user of the program.
 
-    /**
-     * Constructor
-     */
 
     Administration(User user) {
         this.currentUser = user;
         this.currentPatient = patientList.allPatients.get(0);
 
-        System.out.println("=".repeat(30));
-        System.out.format("Logged in as: %s\n", currentUser.getUserName());
-        System.out.format("Function:      %s\n", currentUser.getClass().getSimpleName()); // Laat zien welk type kind-klasse het is
-        System.out.println("=".repeat(30));
-        System.out.format("Current user: [%d] %s\n", user.getUserID(), user.getUserName());
+        MenuPrinter.Header(currentUser);
     }
 
     void menu() {
@@ -44,21 +37,7 @@ public class Administration {
         boolean nextCycle = true;
        
         while (nextCycle) {
-            System.out.format("%s\n", "=".repeat(80));
-            System.out.format("Current patient: %s\n", currentPatient.fullName());
-
-            /*
-             Print menu on screen
-            */
-            System.out.format("%d:  STOP\n", STOP);
-            System.out.format("%d:  View patient data\n", VIEW);
-            System.out.format("%d:  Quick select patient id\n", QUICKSELECT);
-            System.out.format("%d:  Edit current patient data\n", EDIT_PATIENTDATA);
-            System.out.format("%d:  Show patient list\n", PATIENTLIST);// gebruik dit om eigen patient id in tevoeren en van daaruit info. alleen naam en geboortedatum en van daaruit kiezen.
-            System.out.format("%d:  Add medication to current patient\n", ADD_MEDICATION);
-            System.out.format("%d:  EDIT medication to current patient\n", EDIT_MEDICATION);
-            System.out.format("%d:  DELETE medication to current patient\n", DELETE_MEDICATION);
-            System.out.print("Enter your choice: ");
+           MenuPrinter.printMainmenu(currentPatient);
             
             if (scanner.hasNextInt()){ //belangrijk voor letterinput
             int choice = scanner.nextInt();
@@ -66,10 +45,7 @@ public class Administration {
             switch (choice) {
                 case STOP: // interrupt the loop
                     nextCycle = false;
-                        System.out.format("%s\n", " ".repeat(80));
-                        System.out.format("%s\n", "=".repeat(80));
-                        System.out.format("%s\n", " ".repeat(80));
-                        System.out.println("Succesfully logged out, you may close this screen");
+                        MenuPrinter.logOutMessage();
                     break;
 
                 case QUICKSELECT:

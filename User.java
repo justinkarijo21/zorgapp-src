@@ -1,5 +1,5 @@
 
-class User {
+public class User {
     protected String userName;
     protected int userID;
 
@@ -18,8 +18,8 @@ class User {
     }
 
 // setters
-    public void setUsername(String UserName){
-        this.UserName = UserName;
+    public void setUsername(String userName){
+        this.userName = userName;
     }
 
     public void Dashboard (){
