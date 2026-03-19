@@ -38,7 +38,8 @@ public class User {
         return false;
     }
 
-public void selectOtherUser(Scanner scanner, Account account, Administration admin) {
+    //methode voor het selecteren van een andere user, deze wordt opgeroepen in het menu van de administratie class, en geeft de mogelijkheid om te switchen tussen de verschillende users die in de account class staan.
+    public void selectOtherUser(Scanner scanner, Account account, Administration admin) {
         System.out.println("\n--- Select another user ---");
         System.out.println("Available users:");
         for (User u : account.allUsers) {
@@ -66,7 +67,7 @@ public void selectOtherUser(Scanner scanner, Account account, Administration adm
     }
         }
     
-//classes rollen
+//classes rollen met verschillende permissies, deze worden gebruikt om te bepalen welke opties er in het menu worden getoond voor de verschillende users, en welke acties ze kunnen uitvoeren op de patient data.
 class Huisarts extends User{
     public Huisarts (int id, String name){
         super(id, name);

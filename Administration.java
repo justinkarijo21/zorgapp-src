@@ -41,6 +41,8 @@ public class Administration {
         while (nextCycle) {
            MenuPrinter.printMainmenu(currentPatient, currentUser);
             
+// opties in menu, deze worden getoond afhankelijk van de permissies van de user, en worden uitgevoerd via switch case, waarbij elke case een andere functie aanroept die de gewenste actie uitvoert op de patient data.
+
             if (scanner.hasNextInt()){ //belangrijk voor letterinput
             int choice = scanner.nextInt();
             

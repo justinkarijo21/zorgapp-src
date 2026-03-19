@@ -49,9 +49,7 @@ List<String> consultNotes = new ArrayList<>();
         return firstName;
     }
 
-    /**
-     * Display patient data.
-     */
+    //voids voor add medicatie tot patient en add consult note tot patient
     void addMedication(String medicationname){
         this.medications.add(medicationname);
     }
@@ -71,7 +69,7 @@ List<String> consultNotes = new ArrayList<>();
         LocalDate consultDate = LocalDate.now();
         if (!dateInput.isEmpty()) {
             try {
-                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
                 consultDate = LocalDate.parse(dateInput, formatter);
             } catch (java.time.format.DateTimeParseException e) {
                 System.out.println("Invalid date format, using today.");
@@ -88,7 +86,8 @@ List<String> consultNotes = new ArrayList<>();
         addConsultNote(consultDate, note);
         System.out.println("Consult note added.");
     }
-    
+
+    //patient constructor
     void viewData() {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 

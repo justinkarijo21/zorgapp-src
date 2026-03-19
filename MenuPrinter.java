@@ -1,4 +1,6 @@
 public class MenuPrinter {
+/* alle tekst die in het menu wordt getoond */
+
     public static void Header(User currentUser) {
               System.out.println("=".repeat(30));
         System.out.format("Logged in as: %s\n", currentUser.getUserName());
@@ -6,6 +8,7 @@ public class MenuPrinter {
         System.out.println("=".repeat(30));
         System.out.format("Current user: [%d] %s\n", currentUser.getUserID(), currentUser.getUserName());
     }
+
 
     static void printMainmenu(Patient currentPatient, User currentUser){
  System.out.format("%s\n", "=".repeat(80));

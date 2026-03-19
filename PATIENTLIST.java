@@ -7,6 +7,7 @@ import java.util.Scanner;
 public class PATIENTLIST{
 
   List<Patient> allPatients;
+//deze class bevat een lijst van alle patiënten, en methodes om deze te tonen en te selecteren, en om de data van een patiënt te bewerken.
 
     public PATIENTLIST() {
     allPatients = new ArrayList<>();
@@ -19,7 +20,7 @@ public class PATIENTLIST{
         allPatients.add (new Patient(9006, "Van Bussum", "Mark", LocalDate.of(1987, 1, 25), 89.2, 1.95));
 }
  
-        //voids below
+        //voids benadrukt op tonen van patientenlijst en selecteren van patient, en bewerken van patient data
         public void showAndSelectPatient (Scanner scanner, Administration admin) {
         System.out.println("\n AVAILABLE PATIENTS");
         System.out.format("%-4s %-20s %-3s\n", "ID:", "Name:", "Date of Birth:");

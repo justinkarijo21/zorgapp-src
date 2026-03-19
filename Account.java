@@ -7,6 +7,7 @@ public class Account {
     public final List<User> allUsers;
     public User currentUser;
 
+    //de verschillende users worden hier aangemaakt en toegevoegd aan de lijst allUsers, zodat ze later kunnen worden geselecteerd in het login menu.
     public Account() {
         allUsers = new ArrayList<>();
         allUsers.add(new Huisarts(1001, "Dr Supusepa"));

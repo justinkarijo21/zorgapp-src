@@ -3,6 +3,7 @@ import java.util.Scanner;
 
 public class Medication{
 
+    //methodes, voids van alle medicatie functies, add, edit, delete
    static void addMedicationToPatient (Scanner Meds, Patient currentPatient) { // voegt medication toe aan een patient
             System.out.println("\nAdding medication for: " + currentPatient.fullName());
             
