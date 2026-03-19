@@ -38,6 +38,14 @@ public class User {
         return false;
     }
 
+    public boolean canViewPainRelieversOnly() {
+        return false;
+    }
+
+    public boolean canViewPatientData() {
+        return false;
+    }
+
     //methode voor het selecteren van een andere user, deze wordt opgeroepen in het menu van de administratie class, en geeft de mogelijkheid om te switchen tussen de verschillende users die in de account class staan.
     public void selectOtherUser(Scanner scanner, Account account, Administration admin) {
         System.out.println("\n--- Select another user ---");
@@ -91,7 +99,13 @@ class Huisarts extends User{
     @Override
     public boolean canAddMedication() {
         return false;
-}}
+    }
+
+    @Override
+    public boolean canViewPatientData() {
+        return true;
+    }
+}
 
 class Fysio extends User{
     public Fysio (int id, String name){
@@ -116,7 +130,18 @@ class Fysio extends User{
     @Override
     public boolean canAddMedication() {
         return false;
-}}
+    }
+
+    @Override
+    public boolean canViewPainRelieversOnly() {
+        return true;
+    }
+
+    @Override
+    public boolean canViewPatientData() {
+        return true;
+    }
+}
 
 class Apotheker extends User{
     public Apotheker (int id, String name){
@@ -141,7 +166,13 @@ class Apotheker extends User{
     @Override
     public boolean canAddMedication() {
         return true;   
-}}
+    }
+
+    @Override
+    public boolean canViewPatientData() {
+        return true;
+    }
+}
 
 class Tandarts extends User{
     public Tandarts (int id, String name){
@@ -152,7 +183,13 @@ class Tandarts extends User{
             System.out.println("DASHBOARD TANDARTS: " + getUserName());
             System.out.println("\n- Your Patient options");
         }
+
+        @Override
+        public boolean canViewPatientData() {
+            return true;
+        }
 }
+
 
 
 

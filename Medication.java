@@ -3,29 +3,65 @@ import java.util.Scanner;
 
 public class Medication{
 
+    static final String[] STANDARD_MEDICATIONS = {
+        "Paracetamol (Painkiller)",
+        "Ibuprofen (Painkiller)",
+        "Aspirin (Painkiller)",
+        "Amoxicillin",
+        "Lisinopril",
+        "Metformin",
+        "Omeprazole",
+        "Losartan",
+        "Atorvastatin",
+        "Diclofenac (Painkiller)"
+    };
+
     //methodes, voids van alle medicatie functies, add, edit, delete
-   static void addMedicationToPatient (Scanner Meds, Patient currentPatient) { // voegt medication toe aan een patient
-            System.out.println("\nAdding medication for: " + currentPatient.fullName());
-            
-            System.out.print("Enter medication name: ");
-            
-                Meds.nextLine(); 
-                String medName = Meds.nextLine();
+    static void addMedicationToPatient(Scanner Meds, Patient currentPatient) { // voegt medication toe aan een patient
+        System.out.println("\nAdding medication for: " + currentPatient.fullName());
+        System.out.println("\nStandard medications:");
+        for (int i = 0; i < STANDARD_MEDICATIONS.length; i++) {
+            System.out.println((i + 1) + ". " + STANDARD_MEDICATIONS[i]);
+        }
+        System.out.println((STANDARD_MEDICATIONS.length + 1) + ". Custom medication");
+        
+        System.out.print("Select medication (number or custom): ");
+        Meds.nextLine(); 
+        String choice = Meds.nextLine().trim();
 
-                if (!medName.trim().isEmpty()) {
-                    System.out.print("Enter dosage (example, 500mg, 2 tablets): "); //voegt dosage toe aan patient
-                    String dosage = Meds.nextLine();
-
-                if (!dosage.trim().isEmpty()) {
-                    String fullMed = medName + " (" + dosage + ")";
-                    currentPatient.addMedication(fullMed);
-                    System.out.println("Successfully added: " + fullMed);
+        String medName;
+        if (choice.equalsIgnoreCase("custom") || choice.equals(String.valueOf(STANDARD_MEDICATIONS.length + 1))) {
+            System.out.print("Enter custom medication name: ");
+            medName = Meds.nextLine().trim();
+        } else {
+            try {
+                int index = Integer.parseInt(choice) - 1;
+                if (index >= 0 && index < STANDARD_MEDICATIONS.length) {
+                    medName = STANDARD_MEDICATIONS[index];
                 } else {
-                    System.out.println("Error: Dosage cannot be empty");
-                    }   
-                } else {
-                    System.out.println("Error: Medication cannot be empty");
+                    System.out.println("Invalid selection.");
+                    return;
                 }
+            } catch (NumberFormatException e) {
+                System.out.println("Invalid input.");
+                return;
+            }
+        }
+
+        if (!medName.trim().isEmpty()) {
+            System.out.print("Enter dosage (example, 500mg, 2 tablets): ");
+            String dosage = Meds.nextLine().trim();
+
+            if (!dosage.isEmpty()) {
+                String fullMed = medName + " (" + dosage + ")";
+                currentPatient.addMedication(fullMed);
+                System.out.println("Successfully added: " + fullMed);
+            } else {
+                System.out.println("Error: Dosage cannot be empty");
+            }   
+        } else {
+            System.out.println("Error: Medication cannot be empty");
+        }
     }
 
     static void EditMedication (Scanner Editmedication, Patient currentPatient){ //past medicatie van patient aan

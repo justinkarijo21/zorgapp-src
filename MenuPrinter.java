@@ -17,7 +17,9 @@ public class MenuPrinter {
            
             System.out.println("0:  STOP\n");
             System.out.println("1:  Select other user\n");
-            System.out.println("2:  View patient data\n");
+            if (currentUser.canViewPatientData()) {
+                System.out.println("2:  View patient data\n");
+            }
             System.out.println("3:  Quick select patient id\n");
             System.out.println("4:  Edit current patient data\n");
             System.out.println("5:  Show patient list\n");// gebruik dit om eigen patient id in tevoeren en van daaruit info. alleen naam en geboortedatum en van daaruit kiezen.

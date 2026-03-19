@@ -87,8 +87,33 @@ List<String> consultNotes = new ArrayList<>();
         System.out.println("Consult note added.");
     }
 
+    private boolean isPainReliever(String medication) {
+        String lowerMed = medication.toLowerCase();
+        return lowerMed.contains("(painkiller)");
+    }
+
+    List<String> getFilteredMedications(User user) {
+        List<String> filtered = new ArrayList<>();
+        
+        if (user.canViewPainRelieversOnly()) {
+            // Fysio: ziet alleen pain relievers
+            for (String med : medications) {
+                if (isPainReliever(med)) {
+                    filtered.add(med);
+                }
+            }
+        } else if (!user.canViewMedication()) {
+            // Tandarts die geen meds kunnen zien: return empty
+            return filtered;
+        } else {
+            // Huisarts and Apotheker: zien alle medicatie
+            filtered.addAll(medications);
+        }
+        return filtered;
+    }
+
     //patient constructor
-    void viewData() {
+    void viewData(User user) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
         System.out.format("===== Patient id=%d ==============================\n", id);
@@ -98,7 +123,8 @@ List<String> consultNotes = new ArrayList<>();
         System.out.format("%-17s %s\n", "Age:", getAge()); 
         System.out.format("%-17s %s\n", "Weight:", WEIGHT);
         System.out.format("%-17s %s\n", "Length:", LENGTH);
-        System.out.format("%-17s %s\n", "Medication", medications.isEmpty() ? "None" : String.join(", ", medications));
+        List<String> visibleMeds = getFilteredMedications(user);
+        System.out.format("%-17s %s\n", "Medication", visibleMeds.isEmpty() ? "None" : String.join(", ", visibleMeds));
         System.out.format("%-17s %s\n", "Consult Notes:", consultNotes.isEmpty() ? "None" : String.join("; ", consultNotes));
         System.out.format("%-17s %.1f\n", "BMI:", (WEIGHT)/(LENGTH*LENGTH)); //%.1f\n is afronden op 1 decimaal
     }

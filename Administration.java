@@ -62,8 +62,8 @@ public class Administration {
                     break;
 
                 case VIEW:
-                    if (currentUser.canViewMedication()) {
-                        currentPatient.viewData();
+                    if (currentUser.canViewPatientData()) {
+                        currentPatient.viewData(currentUser);
                     } else {
                         System.out.println("Permission Denied");
                     }
