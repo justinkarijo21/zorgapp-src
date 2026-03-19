@@ -7,7 +7,7 @@ public class MenuPrinter {
         System.out.format("Current user: [%d] %s\n", currentUser.getUserID(), currentUser.getUserName());
     }
 
-    public static void printMainmenu(Patient currentPatient, User currentUser){
+    static void printMainmenu(Patient currentPatient, User currentUser){
  System.out.format("%s\n", "=".repeat(80));
             System.out.format("Current patient: %s\n", currentPatient.fullName());
 
@@ -25,6 +25,8 @@ public class MenuPrinter {
                  System.out.println("7:  EDIT medication to current patient\n" );
                  System.out.println("8:  DELETE medication to current patient\n"); 
             }
+            System.out.println("9:  Add consult note\n");
+
             System.out.print("Enter your choice: ");
     }
 

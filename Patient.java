@@ -20,6 +20,7 @@ class Patient {
    double LENGTH;
 
 List<String> medications = new ArrayList<>();
+List<String> consultNotes = new ArrayList<>();
 
     /**
      * Constructor
@@ -32,6 +33,7 @@ List<String> medications = new ArrayList<>();
         this.WEIGHT = WEIGHT;
         this.LENGTH = LENGTH;
         this.medications = new ArrayList<>();
+        this.consultNotes = new ArrayList<>();
     }
 
     public int getAge(){
@@ -53,6 +55,10 @@ List<String> medications = new ArrayList<>();
         this.medications.add(medicationname);
     }
 
+    void addConsultNote(String note){
+        this.consultNotes.add(note);
+    }
+
     void viewData() {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
@@ -64,6 +70,7 @@ List<String> medications = new ArrayList<>();
         System.out.format("%-17s %s\n", "Weight:", WEIGHT);
         System.out.format("%-17s %s\n", "Length:", LENGTH);
         System.out.format("%-17s %s\n", "Medication", medications.isEmpty() ? "None" : String.join(", ", medications));
+        System.out.format("%-17s %s\n", "Consult Notes:", consultNotes.isEmpty() ? "None" : String.join("; ", consultNotes));
         System.out.format("%-17s %.1f\n", "BMI:", (WEIGHT)/(LENGTH*LENGTH)); //%.1f\n is afronden op 1 decimaal
     }
 

@@ -18,6 +18,7 @@ public class Administration {
     static final int ADD_MEDICATION = 6;
     static final int EDIT_MEDICATION = 7;
     static final int DELETE_MEDICATION = 8;
+    static final int ADD_CONSULT = 9;
     
     PATIENTLIST patientList = new PATIENTLIST();
     Patient currentPatient;            // The currently selected patient
@@ -96,6 +97,14 @@ public class Administration {
                     } else {
                         System.out.println("Permission Denied");
                     }
+                    break;
+
+                case ADD_CONSULT:
+                    System.out.println("Enter consult note:");
+                    scanner.nextLine(); // consume newline
+                    String note = scanner.nextLine();
+                    currentPatient.addConsultNote(note);
+                    System.out.println("Consult note added.");
                     break;
 
                 default:

@@ -3,7 +3,7 @@ import java.util.Scanner;
 
 public class Medication{
 
-    public static void addMedicationToPatient (Scanner Meds, Patient currentPatient) { // voegt medication toe aan een patient
+   static void addMedicationToPatient (Scanner Meds, Patient currentPatient) { // voegt medication toe aan een patient
             System.out.println("\nAdding medication for: " + currentPatient.fullName());
             
             System.out.print("Enter medication name: ");
@@ -27,7 +27,7 @@ public class Medication{
                 }
     }
 
-    public static void EditMedication (Scanner Editmedication, Patient currentPatient){ //past medicatie van patient aan
+    static void EditMedication (Scanner Editmedication, Patient currentPatient){ //past medicatie van patient aan
         System.out.println("\nEditing medication for: " + currentPatient.fullName());
 
             List<String> meds = currentPatient.medications;
@@ -64,7 +64,7 @@ public class Medication{
             }
     }
 
-    public static void DeleteMed(Scanner scanner, Patient currentPatient) {
+    static void DeleteMed(Scanner scanner, Patient currentPatient) {
         System.out.println("\nDeleting medication for: " + currentPatient.fullName());
 
         List<String> meds = currentPatient.medications;
