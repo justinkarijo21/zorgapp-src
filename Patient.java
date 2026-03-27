@@ -2,10 +2,11 @@ import java.time.LocalDate;
 import java.time.Period;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.List;  
+import java.util.List;
+import java.util.Scanner;
 
 
-
+//opsplit 
 class Patient {
    static final int RETURN      = 0;
    static final int SURNAME     = 1;
@@ -18,8 +19,12 @@ class Patient {
    LocalDate dateOfBirth;
    double WEIGHT;
    double LENGTH;
+   double Lunginhoud;
 
+List<String> allergies = new ArrayList<>();
 List<String> medications = new ArrayList<>();
+List<String> consultNotes = new ArrayList<>();
+
 
     /**
      * Constructor
@@ -32,6 +37,8 @@ List<String> medications = new ArrayList<>();
         this.WEIGHT = WEIGHT;
         this.LENGTH = LENGTH;
         this.medications = new ArrayList<>();
+        this.consultNotes = new ArrayList<>();
+        this.allergies = new ArrayList<>();
     }
 
     public int getAge(){
@@ -46,14 +53,108 @@ List<String> medications = new ArrayList<>();
         return firstName;
     }
 
-    /**
-     * Display patient data.
-     */
+   
+
+    //voids voor add medicatie tot patient en add consult note tot patient
     void addMedication(String medicationname){
         this.medications.add(medicationname);
     }
 
-    void viewData() {
+    void addConsultNote(LocalDate date, String note){
+        String formatted = date.format(DateTimeFormatter.ofPattern("dd/MM/yyyy")) + ": " + note;
+        this.consultNotes.add(formatted);
+    }
+
+    void addConsultNoteInput(Scanner scanner) {
+        if (scanner.hasNextLine()) {
+            scanner.nextLine();
+        }
+
+        System.out.println("Enter consult date (dd/MM/yyyy) or leave empty for today:");
+        String dateInput = scanner.nextLine().trim();
+        LocalDate consultDate = LocalDate.now();
+        if (!dateInput.isEmpty()) {
+            try {
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+                consultDate = LocalDate.parse(dateInput, formatter);
+            } catch (java.time.format.DateTimeParseException e) {
+                System.out.println("Invalid date format, using today.");
+            }
+        }
+
+        System.out.println("Enter consult note:");
+        String note = scanner.nextLine().trim();
+        if (note.isEmpty()) {
+            System.out.println("No note entered, cancelled.");
+            return;
+        }
+
+        addConsultNote(consultDate, note);
+        System.out.println("Consult note added.");
+    }
+
+    void addAllergieInfo(String allergieInfo){
+        String InfoFormat = allergieInfo;
+        this.allergies.add(InfoFormat);
+    }
+
+    void addAllergieInfoInput(Scanner scanner){
+        if (scanner.hasNextLine()){
+            scanner.nextLine();
+        }
+
+        System.out.println("Enter Patients allergie:");
+        String allergieInfo = scanner.nextLine().trim();
+        if(allergieInfo.isEmpty()){
+            System.out.println("No allergie added, returning");
+            return;
+        }
+
+        addAllergieInfo(allergieInfo);
+        System.out.println("Allergie added");
+    }
+
+void lungInfoInput (Scanner scanner){
+    if (scanner.hasNextLine()){
+        scanner.nextLine();
+    }
+
+    System.out.println("Enter current lung capacity: ");
+            String lungs = scanner.nextLine();
+            if (!lungs.isEmpty()) {
+            Lunginhoud = Double.parseDouble(lungs);
+            }
+ 
+            System.out.println("Lung capacity added!");
+}
+
+    private boolean isPainReliever(String medication) {
+        String lowerMed = medication.toLowerCase();
+        return lowerMed.contains("(painkiller)");
+    }
+
+    List<String> getFilteredMedications(User user) {
+        List<String> filtered = new ArrayList<>();
+        
+        if (user.canViewPainRelieversOnly()) {
+            // Fysio: ziet alleen pain relievers
+            for (String med : medications) {
+                if (isPainReliever(med)) {
+                    filtered.add(med);
+                }
+            }
+        } else if (!user.canViewMedication()) {
+            // Tandarts die geen meds kunnen zien: return empty
+            return filtered;
+        } else {
+            // Huisarts and Apotheker: zien alle medicatie
+            filtered.addAll(medications);
+        }
+        return filtered;
+    }
+
+    //patient constructor
+    void viewData(User user) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
         System.out.format("===== Patient id=%d ==============================\n", id);
@@ -63,8 +164,12 @@ List<String> medications = new ArrayList<>();
         System.out.format("%-17s %s\n", "Age:", getAge()); 
         System.out.format("%-17s %s\n", "Weight:", WEIGHT);
         System.out.format("%-17s %s\n", "Length:", LENGTH);
-        System.out.format("%-17s %s\n", "Medication", medications.isEmpty() ? "None" : String.join(", ", medications));
+        List<String> visibleMeds = getFilteredMedications(user);
+        System.out.format("%-17s %s\n", "Medication", visibleMeds.isEmpty() ? "None" : String.join(", ", visibleMeds));
         System.out.format("%-17s %.1f\n", "BMI:", (WEIGHT)/(LENGTH*LENGTH)); //%.1f\n is afronden op 1 decimaal
+        System.out.format("%-17s %s\n", "Consult Notes:", consultNotes.isEmpty() ? "None" : String.join("; ", consultNotes));
+        System.out.format("%-17s %s\n", "Allergies:", allergies);
+        System.out.format("%-17s %s\n", "Lung capacity", Lunginhoud);
     }
 
     /**
