@@ -9,7 +9,7 @@ public class MenuPrinter {
         System.out.format("Current user: [%d] %s\n", currentUser.getUserID(), currentUser.getUserName());
     }
 
-
+//blabla
     static void printMainmenu(Patient currentPatient, User currentUser){
  System.out.format("%s\n", "=".repeat(80));
             System.out.format("Current patient: %s\n", currentPatient.fullName());
