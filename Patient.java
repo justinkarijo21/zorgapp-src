@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Scanner;
 
 
-
+//opsplit 
 class Patient {
    static final int RETURN      = 0;
    static final int SURNAME     = 1;
