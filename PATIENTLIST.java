@@ -57,6 +57,7 @@ public class PATIENTLIST{
         
     }
 
+    //methodes en voids alles voor patient
     public void QuickPatient (Scanner scanpatient, Administration admin) { //in de toekomst evt zoeken op naam of geboortedatum
         System.out.print("Select patient ID: ");
                         

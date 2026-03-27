@@ -132,4 +132,9 @@ public class Medication{
             scanner.next();
                 }
                     }
+
+   /* static void addDeleteEditMed (Scanner scanner, Patient currentPatient){
+        System.out.println("\n Would you like to ADD, EDIT or DELETE Medication for: " + currentPatient.fullName());
+
+    }*/
 }

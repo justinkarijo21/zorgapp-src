@@ -32,6 +32,12 @@ public class MenuPrinter {
             }
             System.out.println("9:  Add consult note\n");
 
+            if (currentUser.canAddAllergie()){
+            System.out.println("10: Add allergie to current patient\n");}
+
+            if (currentUser.canAddLungInfo()){
+            System.out.println("11: Add Lung capacity to current patient\n");}
+
             System.out.print("Enter your choice: ");
     }
 

@@ -19,6 +19,8 @@ public class Administration {
     static final int EDIT_MEDICATION = 7;
     static final int DELETE_MEDICATION = 8;
     static final int ADD_CONSULT = 9;
+    static final int ADD_ALLERGIE = 10;
+    static final int ADD_LUNGCAPACITY = 11;
     
     PATIENTLIST patientList = new PATIENTLIST();
     Patient currentPatient;            // The currently selected patient
@@ -104,6 +106,15 @@ public class Administration {
                 case ADD_CONSULT:
                     currentPatient.addConsultNoteInput(scanner);
                     break;
+                
+                case ADD_ALLERGIE:
+                    currentPatient.addAllergieInfoInput(scanner);
+                    break;
+
+                case ADD_LUNGCAPACITY:
+                    currentPatient.lungInfoInput(scanner);
+                    break;
+
 
                 default:
                     System.out.println("Please enter a *valid* digit");

@@ -46,6 +46,14 @@ public class User {
         return false;
     }
 
+    public boolean canAddAllergie(){
+        return false;
+    }
+
+    public boolean canAddLungInfo(){
+        return false;
+    }
+
     //methode voor het selecteren van een andere user, deze wordt opgeroepen in het menu van de administratie class, en geeft de mogelijkheid om te switchen tussen de verschillende users die in de account class staan.
     public void selectOtherUser(Scanner scanner, Account account, Administration admin) {
         System.out.println("\n--- Select another user ---");
@@ -93,16 +101,21 @@ class Huisarts extends User{
 
     @Override
     public boolean canEditMedication() {
-        return false;
+        return true;
     }
 
     @Override
     public boolean canAddMedication() {
-        return false;
+        return true;
     }
 
     @Override
     public boolean canViewPatientData() {
+        return true;
+    }
+
+    @Override
+    public boolean canAddAllergie() {
         return true;
     }
 }
@@ -141,6 +154,11 @@ class Fysio extends User{
     public boolean canViewPatientData() {
         return true;
     }
+
+    @Override
+    public boolean canAddLungInfo(){
+        return true;
+    }
 }
 
 class Apotheker extends User{
@@ -160,12 +178,12 @@ class Apotheker extends User{
 
     @Override
     public boolean canEditMedication() {
-        return true;
+        return false;
     }
 
     @Override
     public boolean canAddMedication() {
-        return true;   
+        return false;   
     }
 
     @Override

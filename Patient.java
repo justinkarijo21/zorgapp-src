@@ -19,9 +19,12 @@ class Patient {
    LocalDate dateOfBirth;
    double WEIGHT;
    double LENGTH;
+   double Lunginhoud;
 
+List<String> allergies = new ArrayList<>();
 List<String> medications = new ArrayList<>();
 List<String> consultNotes = new ArrayList<>();
+
 
     /**
      * Constructor
@@ -35,6 +38,7 @@ List<String> consultNotes = new ArrayList<>();
         this.LENGTH = LENGTH;
         this.medications = new ArrayList<>();
         this.consultNotes = new ArrayList<>();
+        this.allergies = new ArrayList<>();
     }
 
     public int getAge(){
@@ -48,6 +52,8 @@ List<String> consultNotes = new ArrayList<>();
     String getFirstName() {
         return firstName;
     }
+
+   
 
     //voids voor add medicatie tot patient en add consult note tot patient
     void addMedication(String medicationname){
@@ -87,6 +93,41 @@ List<String> consultNotes = new ArrayList<>();
         System.out.println("Consult note added.");
     }
 
+    void addAllergieInfo(String allergieInfo){
+        String InfoFormat = allergieInfo;
+        this.allergies.add(InfoFormat);
+    }
+
+    void addAllergieInfoInput(Scanner scanner){
+        if (scanner.hasNextLine()){
+            scanner.nextLine();
+        }
+
+        System.out.println("Enter Patients allergie:");
+        String allergieInfo = scanner.nextLine().trim();
+        if(allergieInfo.isEmpty()){
+            System.out.println("No allergie added, returning");
+            return;
+        }
+
+        addAllergieInfo(allergieInfo);
+        System.out.println("Allergie added");
+    }
+
+void lungInfoInput (Scanner scanner){
+    if (scanner.hasNextLine()){
+        scanner.nextLine();
+    }
+
+    System.out.println("Enter current lung capacity: ");
+            String lungs = scanner.nextLine();
+            if (!lungs.isEmpty()) {
+            Lunginhoud = Double.parseDouble(lungs);
+            }
+ 
+            System.out.println("Lung capacity added!");
+}
+
     private boolean isPainReliever(String medication) {
         String lowerMed = medication.toLowerCase();
         return lowerMed.contains("(painkiller)");
@@ -125,8 +166,10 @@ List<String> consultNotes = new ArrayList<>();
         System.out.format("%-17s %s\n", "Length:", LENGTH);
         List<String> visibleMeds = getFilteredMedications(user);
         System.out.format("%-17s %s\n", "Medication", visibleMeds.isEmpty() ? "None" : String.join(", ", visibleMeds));
-        System.out.format("%-17s %s\n", "Consult Notes:", consultNotes.isEmpty() ? "None" : String.join("; ", consultNotes));
         System.out.format("%-17s %.1f\n", "BMI:", (WEIGHT)/(LENGTH*LENGTH)); //%.1f\n is afronden op 1 decimaal
+        System.out.format("%-17s %s\n", "Consult Notes:", consultNotes.isEmpty() ? "None" : String.join("; ", consultNotes));
+        System.out.format("%-17s %s\n", "Allergies:", allergies);
+        System.out.format("%-17s %s\n", "Lung capacity", Lunginhoud);
     }
 
     /**
