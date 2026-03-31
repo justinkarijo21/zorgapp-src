@@ -23,12 +23,15 @@ public class Administration {
     static final int ADD_LUNGCAPACITY = 11;
     
     PATIENTLIST patientList = new PATIENTLIST();
+    loginManager userAcces = new loginManager();
+    Account account;                   // The account with all users
     Patient currentPatient;            // The currently selected patient
     User currentUser;               // the current user of the program.
 
 
-    Administration(User user) {
+    Administration(User user, Account account) {
         this.currentUser = user;
+        this.account = account;
         this.currentPatient = patientList.allPatients.get(0);
 
         MenuPrinter.Header(currentUser);
@@ -55,7 +58,7 @@ public class Administration {
                     break;
 
                 case OTHERUSER:
-                    currentUser.selectOtherUser(scanner, new Account(), this);
+                    userAcces.selectOtherUser( scanner, account, this)  ;
                     MenuPrinter.Header(currentUser);
                     break;
 
@@ -64,11 +67,7 @@ public class Administration {
                     break;
 
                 case VIEW:
-                    if (currentUser.canViewPatientData()) {
                         currentPatient.viewData(currentUser);
-                    } else {
-                        System.out.println("Permission Denied");
-                    }
                     break;
 
                 case EDIT_PATIENTDATA:
@@ -80,7 +79,7 @@ public class Administration {
                     break;
                
                 case ADD_MEDICATION:
-                    if (currentUser.canEditMedication()) {
+                    if (currentUser.canAllMedication()) {
                         Medication.addMedicationToPatient(scanner, currentPatient);
                     } else {
                         System.out.println("Permission Denied");
@@ -96,7 +95,7 @@ public class Administration {
                     break;
 
                 case DELETE_MEDICATION:
-                    if (currentUser.canEditMedication()) {
+                    if (currentUser.canAllMedication()) {
                         Medication.DeleteMed(scanner, currentPatient);
                     } else {
                         System.out.println("Permission Denied");

@@ -9,7 +9,7 @@ public class ZorgApp {
                 return;
             }
 
-            Administration administration = new Administration(loggedinUser);
+            Administration administration = new Administration(loggedinUser, account);
             administration.menu();
         }
     }
