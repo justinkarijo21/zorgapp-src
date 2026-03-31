@@ -1,13 +1,6 @@
 import java.util.Scanner;
 
-/**
- * class Administration represents the core of the application by showing
- * the main menu, from where all other functionality is accessible, either
- * directly or via sub-menus.
- * An Administration instance needs a User as input, which is passed via the
- * constructor to the data member 'currentUser'.
- * The patient data is available via the data member currentPatient.
- */
+
 public class Administration {
     static final int STOP = 0;
     static final int OTHERUSER = 1;
