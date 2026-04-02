@@ -18,7 +18,60 @@ public class PATIENTLIST{
         allPatients.add (new Patient(9004, "Van Dijk", "Virgil", LocalDate.of(1998, 5, 15), 87.9, 1.90));
         allPatients.add (new Patient(9005, "Tranada", "Kay", LocalDate.of(2003, 1, 22), 87.8, 1.95));
         allPatients.add (new Patient(9006, "Van Bussum", "Mark", LocalDate.of(1987, 1, 25), 89.2, 1.95));
-}
+
+        // Add BMI history data to patients
+        addBmiDataToPatients();
+    }
+
+    private void addBmiDataToPatients() {
+        // Pierre Van Puffelen (ID 9001) - Normal BMI progression
+        Patient pierre = allPatients.get(0);
+        pierre.addBmiEntry(LocalDate.of(2023, 1, 15), 22.5);
+        pierre.addBmiEntry(LocalDate.of(2023, 4, 10), 23.1);
+        pierre.addBmiEntry(LocalDate.of(2023, 7, 5), 22.8);
+        pierre.addBmiEntry(LocalDate.of(2023, 10, 12), 23.5);
+        pierre.addBmiEntry(LocalDate.of(2024, 1, 8), 24.2);
+
+        // Jasmijn Ekkelon (ID 9002) - Slight increase
+        Patient jasmijn = allPatients.get(1);
+        jasmijn.addBmiEntry(LocalDate.of(2023, 2, 20), 24.0);
+        jasmijn.addBmiEntry(LocalDate.of(2023, 5, 15), 24.3);
+        jasmijn.addBmiEntry(LocalDate.of(2023, 8, 10), 24.8);
+        jasmijn.addBmiEntry(LocalDate.of(2023, 11, 5), 25.1);
+        jasmijn.addBmiEntry(LocalDate.of(2024, 2, 1), 25.4);
+
+        // Bob Kali (ID 9003) - Overweight trend
+        Patient bob = allPatients.get(2);
+        bob.addBmiEntry(LocalDate.of(2023, 3, 1), 26.2);
+        bob.addBmiEntry(LocalDate.of(2023, 6, 15), 26.8);
+        bob.addBmiEntry(LocalDate.of(2023, 9, 20), 27.1);
+        bob.addBmiEntry(LocalDate.of(2023, 12, 10), 27.5);
+        bob.addBmiEntry(LocalDate.of(2024, 3, 5), 28.0);
+
+        // Virgil Van Dijk (ID 9004) - Stable overweight
+        Patient virgil = allPatients.get(3);
+        virgil.addBmiEntry(LocalDate.of(2023, 1, 20), 25.8);
+        virgil.addBmiEntry(LocalDate.of(2023, 4, 25), 25.9);
+        virgil.addBmiEntry(LocalDate.of(2023, 7, 30), 26.1);
+        virgil.addBmiEntry(LocalDate.of(2023, 10, 15), 25.7);
+        virgil.addBmiEntry(LocalDate.of(2024, 1, 10), 26.0);
+
+        // Kay Tranada (ID 9005) - Underweight to normal
+        Patient kay = allPatients.get(4);
+        kay.addBmiEntry(LocalDate.of(2023, 2, 5), 17.8);
+        kay.addBmiEntry(LocalDate.of(2023, 5, 12), 18.2);
+        kay.addBmiEntry(LocalDate.of(2023, 8, 18), 18.9);
+        kay.addBmiEntry(LocalDate.of(2023, 11, 25), 19.5);
+        kay.addBmiEntry(LocalDate.of(2024, 2, 15), 20.1);
+
+        // Mark Van Bussum (ID 9006) - Obese
+        Patient mark = allPatients.get(5);
+        mark.addBmiEntry(LocalDate.of(2023, 1, 30), 31.2);
+        mark.addBmiEntry(LocalDate.of(2023, 4, 20), 31.8);
+        mark.addBmiEntry(LocalDate.of(2023, 7, 15), 32.1);
+        mark.addBmiEntry(LocalDate.of(2023, 10, 8), 31.9);
+        mark.addBmiEntry(LocalDate.of(2024, 1, 5), 32.5);
+    }
  
         //voids benadrukt op tonen van patientenlijst en selecteren van patient, en bewerken van patient data
         public void showAndSelectPatient (Scanner scanner, Administration admin) {

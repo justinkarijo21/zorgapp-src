@@ -14,6 +14,7 @@ public class Administration {
     static final int ADD_CONSULT = 9;
     static final int ADD_ALLERGIE = 10;
     static final int ADD_LUNGCAPACITY = 11;
+    static final int VIEW_BMI_GRAPH = 12;
     
     PATIENTLIST patientList = new PATIENTLIST();
     loginManager userAcces = new loginManager();
@@ -105,6 +106,10 @@ public class Administration {
 
                 case ADD_LUNGCAPACITY:
                     currentPatient.lungInfoInput(scanner);
+                    break;
+
+                case VIEW_BMI_GRAPH:
+                    BmiGrafiek.printBmiGraph(currentPatient);
                     break;
 
 

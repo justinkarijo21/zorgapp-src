@@ -24,6 +24,20 @@ class Patient {
 List<String> allergies = new ArrayList<>();
 List<String> medications = new ArrayList<>();
 List<String> consultNotes = new ArrayList<>();
+List<BmiEntry> bmiHistory = new ArrayList<>();
+
+    /**
+     * BMI Entry class to store BMI measurements with dates
+     */
+    static class BmiEntry {
+        LocalDate date;
+        double bmi;
+        
+        BmiEntry(LocalDate date, double bmi) {
+            this.date = date;
+            this.bmi = bmi;
+        }
+    }
 
 
     /**
@@ -39,6 +53,7 @@ List<String> consultNotes = new ArrayList<>();
         this.medications = new ArrayList<>();
         this.consultNotes = new ArrayList<>();
         this.allergies = new ArrayList<>();
+        this.bmiHistory = new ArrayList<>();
     }
 
     public int getAge(){
@@ -96,6 +111,14 @@ List<String> consultNotes = new ArrayList<>();
     void addAllergieInfo(String allergieInfo){
         String InfoFormat = allergieInfo;
         this.allergies.add(InfoFormat);
+    }
+
+    void addBmiEntry(LocalDate date, double bmi) {
+        this.bmiHistory.add(new BmiEntry(date, bmi));
+    }
+
+    void addBmiEntry(double bmi) {
+        this.bmiHistory.add(new BmiEntry(LocalDate.now(), bmi));
     }
 
     void addAllergieInfoInput(Scanner scanner){

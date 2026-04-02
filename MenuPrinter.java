@@ -40,6 +40,8 @@ public class MenuPrinter {
             if (currentUser.canAddLungInfo()){
             System.out.println("11: Add Lung capacity to current patient\n");}
 
+            System.out.println("12: View BMI graph for current patient\n");
+
             System.out.print("Enter your choice: ");
     }
 
