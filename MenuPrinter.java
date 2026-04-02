@@ -22,14 +22,14 @@ public class MenuPrinter {
             System.out.println("4:  Edit current patient data\n");
             System.out.println("5:  Show patient list\n");// gebruik dit om eigen patient id in tevoeren en van daaruit info. alleen naam en geboortedatum en van daaruit kiezen.
             
-            if (currentUser.canAllMedication()) {
+            if (currentUser.canAddAllMedication()) {
                 System.out.println("6:  Add medication to current patient\n");}
             
             if (currentUser.canEditMedication()) {  
                 System.out.println("7:  Edit medication of current patient\n");
            }
 
-            if (currentUser.canAllMedication()) {
+            if (currentUser.canAddAllMedication()) {
                 System.out.println("8:  DELETE medication to current patient\n"); 
            }
             System.out.println("9:  Add consult note\n");

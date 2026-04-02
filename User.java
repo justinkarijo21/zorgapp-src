@@ -29,7 +29,7 @@ public class User {
         return false;
     }
 
-    public boolean canAllMedication() {
+    public boolean canAddAllMedication() {
         return false;
     }
     public boolean canEditMedication() {
@@ -66,7 +66,7 @@ class Huisarts extends User{
     }
 
     @Override
-    public boolean canAllMedication() {
+    public boolean canAddAllMedication() {
         return true;
     }
 

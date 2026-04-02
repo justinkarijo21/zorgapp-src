@@ -73,7 +73,7 @@ public class Administration {
                     break;
                
                 case ADD_MEDICATION:
-                    if (currentUser.canAllMedication()) {
+                    if (currentUser.canAddAllMedication()) {
                         Medication.addMedicationToPatient(scanner, currentPatient);
                     } else {
                         System.out.println("Permission Denied");
@@ -89,7 +89,7 @@ public class Administration {
                     break;
 
                 case DELETE_MEDICATION:
-                    if (currentUser.canAllMedication()) {
+                    if (currentUser.canAddAllMedication()) {
                         Medication.DeleteMed(scanner, currentPatient);
                     } else {
                         System.out.println("Permission Denied");
