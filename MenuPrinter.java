@@ -17,19 +17,21 @@ public class MenuPrinter {
            
             System.out.println("0:  STOP\n");
             System.out.println("1:  Select other user\n");
-            if (currentUser.canViewPatientData()) {
-                System.out.println("2:  View patient data\n");
-            }
+            System.out.println("2:  View patient data\n");
             System.out.println("3:  Quick select patient id\n");
             System.out.println("4:  Edit current patient data\n");
             System.out.println("5:  Show patient list\n");// gebruik dit om eigen patient id in tevoeren en van daaruit info. alleen naam en geboortedatum en van daaruit kiezen.
-            if (currentUser.canAddMedication()) {
-                System.out.println("6:  Add medication to current patient\n");
-            }
-            if (currentUser.canEditMedication()) {
-                 System.out.println("7:  EDIT medication to current patient\n" );
-                 System.out.println("8:  DELETE medication to current patient\n"); 
-            }
+            
+            if (currentUser.canAllMedication()) {
+                System.out.println("6:  Add medication to current patient\n");}
+            
+            if (currentUser.canEditMedication()) {  
+                System.out.println("7:  Edit medication of current patient\n");
+           }
+
+            if (currentUser.canAllMedication()) {
+                System.out.println("8:  DELETE medication to current patient\n"); 
+           }
             System.out.println("9:  Add consult note\n");
 
             if (currentUser.canAddAllergie()){

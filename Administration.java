@@ -1,13 +1,6 @@
 import java.util.Scanner;
 
-/**
- * class Administration represents the core of the application by showing
- * the main menu, from where all other functionality is accessible, either
- * directly or via sub-menus.
- * An Administration instance needs a User as input, which is passed via the
- * constructor to the data member 'currentUser'.
- * The patient data is available via the data member currentPatient.
- */
+
 public class Administration {
     static final int STOP = 0;
     static final int OTHERUSER = 1;
@@ -23,12 +16,15 @@ public class Administration {
     static final int ADD_LUNGCAPACITY = 11;
     
     PATIENTLIST patientList = new PATIENTLIST();
+    loginManager userAcces = new loginManager();
+    Account account;                   // The account with all users
     Patient currentPatient;            // The currently selected patient
     User currentUser;               // the current user of the program.
 
 
-    Administration(User user) {
+    Administration(User user, Account account) {
         this.currentUser = user;
+        this.account = account;
         this.currentPatient = patientList.allPatients.get(0);
 
         MenuPrinter.Header(currentUser);
@@ -55,7 +51,7 @@ public class Administration {
                     break;
 
                 case OTHERUSER:
-                    currentUser.selectOtherUser(scanner, new Account(), this);
+                    userAcces.selectOtherUser( scanner, account, this)  ;
                     MenuPrinter.Header(currentUser);
                     break;
 
@@ -64,11 +60,7 @@ public class Administration {
                     break;
 
                 case VIEW:
-                    if (currentUser.canViewPatientData()) {
                         currentPatient.viewData(currentUser);
-                    } else {
-                        System.out.println("Permission Denied");
-                    }
                     break;
 
                 case EDIT_PATIENTDATA:
@@ -80,7 +72,7 @@ public class Administration {
                     break;
                
                 case ADD_MEDICATION:
-                    if (currentUser.canEditMedication()) {
+                    if (currentUser.canAllMedication()) {
                         Medication.addMedicationToPatient(scanner, currentPatient);
                     } else {
                         System.out.println("Permission Denied");
@@ -96,7 +88,7 @@ public class Administration {
                     break;
 
                 case DELETE_MEDICATION:
-                    if (currentUser.canEditMedication()) {
+                    if (currentUser.canAllMedication()) {
                         Medication.DeleteMed(scanner, currentPatient);
                     } else {
                         System.out.println("Permission Denied");
