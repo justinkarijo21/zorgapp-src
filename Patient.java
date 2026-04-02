@@ -24,18 +24,24 @@ class Patient {
 List<String> allergies = new ArrayList<>();
 List<String> medications = new ArrayList<>();
 List<String> consultNotes = new ArrayList<>();
-List<BmiEntry> bmiHistory = new ArrayList<>();
+List<WeightEntry> weightHistory = new ArrayList<>();
 
     /**
-     * BMI Entry class to store BMI measurements with dates
+     * Weight Entry class to store weight/length measurements with dates
      */
-    static class BmiEntry {
+    static class WeightEntry {
         LocalDate date;
-        double bmi;
+        double weight;
+        double length;
         
-        BmiEntry(LocalDate date, double bmi) {
+        WeightEntry(LocalDate date, double weight, double length) {
             this.date = date;
-            this.bmi = bmi;
+            this.weight = weight;
+            this.length = length;
+        }
+        
+        double calculateBmi() {
+            return weight / (length * length);
         }
     }
 
@@ -53,7 +59,7 @@ List<BmiEntry> bmiHistory = new ArrayList<>();
         this.medications = new ArrayList<>();
         this.consultNotes = new ArrayList<>();
         this.allergies = new ArrayList<>();
-        this.bmiHistory = new ArrayList<>();
+        this.weightHistory = new ArrayList<>();
     }
 
     public int getAge(){
@@ -113,12 +119,16 @@ List<BmiEntry> bmiHistory = new ArrayList<>();
         this.allergies.add(InfoFormat);
     }
 
-    void addBmiEntry(LocalDate date, double bmi) {
-        this.bmiHistory.add(new BmiEntry(date, bmi));
+    void recordWeightEntry(LocalDate date, double weight, double length) {
+        this.WEIGHT = weight;
+        this.LENGTH = length;
+        this.weightHistory.add(new WeightEntry(date, weight, length));
     }
 
-    void addBmiEntry(double bmi) {
-        this.bmiHistory.add(new BmiEntry(LocalDate.now(), bmi));
+    void recordWeightEntry(double weight, double length) {
+        this.WEIGHT = weight;
+        this.LENGTH = length;
+        this.weightHistory.add(new WeightEntry(LocalDate.now(), weight, length));
     }
 
     void addAllergieInfoInput(Scanner scanner){
@@ -188,8 +198,7 @@ void lungInfoInput (Scanner scanner){
         System.out.format("%-17s %s\n", "Weight:", WEIGHT);
         System.out.format("%-17s %s\n", "Length:", LENGTH);
         List<String> visibleMeds = getFilteredMedications(user);
-        System.out.format("%-17s %s\n", "Medication", visibleMeds.isEmpty() ? "None" : String.join(", ", visibleMeds));
-        System.out.format("%-17s %.1f\n", "BMI:", (WEIGHT)/(LENGTH*LENGTH)); //%.1f\n is afronden op 1 decimaal
+        System.out.format("%-17s %.1f\n", "Current BMI:", (WEIGHT)/(LENGTH*LENGTH)); //%.1f\n is afronden op 1 decimaal
         System.out.format("%-17s %s\n", "Consult Notes:", consultNotes.isEmpty() ? "None" : String.join("; ", consultNotes));
         System.out.format("%-17s %s\n", "Allergies:", allergies);
         System.out.format("%-17s %s\n", "Lung capacity", Lunginhoud);

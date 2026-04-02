@@ -3,30 +3,30 @@ import java.time.format.DateTimeFormatter;
 public class BmiGrafiek {
     
     public static void printBmiGraph(Patient patient) {
-        if (patient.bmiHistory.isEmpty()) {
-            System.out.println("No BMI history available for this patient.");
+        if (patient.weightHistory.isEmpty()) {
+            System.out.println("\nNo weight changes recorded yet for this patient.");
+            System.out.println("Edit patient weight/length to see BMI graph.");
             return;
         }
         
-        System.out.println("\n=== BMI History Graph for " + patient.firstName + " " + patient.surname + " ===");
+        System.out.println("\n=== BMI Graph for " + patient.firstName + " " + patient.surname + " ===");
         
-        // Find min and max BMI for scaling
         double minBmi = Double.MAX_VALUE;
         double maxBmi = Double.MIN_VALUE;
         
-        for (Patient.BmiEntry entry : patient.bmiHistory) {
-            if (entry.bmi < minBmi) minBmi = entry.bmi;
-            if (entry.bmi > maxBmi) maxBmi = entry.bmi;
+        for (Patient.WeightEntry entry : patient.weightHistory) {
+            double bmi = entry.calculateBmi();
+            if (bmi < minBmi) minBmi = bmi;
+            if (bmi > maxBmi) maxBmi = bmi;
         }
         
-        // Add some padding
         minBmi = Math.max(0, minBmi - 2);
         maxBmi = maxBmi + 2;
         
-        // Graph dimensions
+
         int graphHeight = 20;
         
-        // Create the graph
+     
         for (int row = graphHeight; row >= 0; row--) {
             double currentBmi = minBmi + (maxBmi - minBmi) * row / graphHeight;
             
@@ -37,9 +37,10 @@ public class BmiGrafiek {
                 System.out.print("      |");
             }
             
-            // Print the graph points
-            for (Patient.BmiEntry entry : patient.bmiHistory) {
-                double normalizedBmi = (entry.bmi - minBmi) / (maxBmi - minBmi);
+         
+            for (Patient.WeightEntry entry : patient.weightHistory) {
+                double bmi = entry.calculateBmi();
+                double normalizedBmi = (bmi - minBmi) / (maxBmi - minBmi);
                 int graphRow = (int) (normalizedBmi * graphHeight);
                 
                 if (graphRow == row) {
@@ -51,17 +52,18 @@ public class BmiGrafiek {
             System.out.println();
         }
         
-        // Print bottom axis
+       
         System.out.print("      +");
-        for (Patient.BmiEntry entry : patient.bmiHistory) {
+        for (Patient.WeightEntry entry : patient.weightHistory) {
             System.out.print("---");
         }
         System.out.println();
         
-        // Print dates
+        //Print datum 
+        
         System.out.print("        ");
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/yy");
-        for (Patient.BmiEntry entry : patient.bmiHistory) {
+        for (Patient.WeightEntry entry : patient.weightHistory) {
             System.out.printf("%-3s", entry.date.format(formatter));
         }
         System.out.println("\n");
