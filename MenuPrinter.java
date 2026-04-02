@@ -2,7 +2,7 @@ public class MenuPrinter {
 /* alle tekst die in het menu wordt getoond */
 
     public static void Header(User currentUser) {
-              System.out.println("=".repeat(30));
+        System.out.println("=".repeat(30));
         System.out.format("Logged in as: %s\n", currentUser.getUserName());
         System.out.format("Function:      %s\n", currentUser.getClass().getSimpleName()); // Laat zien welk type kind-klasse het is
         System.out.println("=".repeat(30));
@@ -11,10 +11,9 @@ public class MenuPrinter {
 
 //blabla
     static void printMainmenu(Patient currentPatient, User currentUser){
- System.out.format("%s\n", "=".repeat(80));
+            System.out.format("%s\n", "=".repeat(80));
             System.out.format("Current patient: %s\n", currentPatient.fullName());
-
-           
+            
             System.out.println("0:  STOP\n");
             System.out.println("1:  Select other user\n");
             System.out.println("2:  View patient data\n");
