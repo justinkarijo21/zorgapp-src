@@ -5,61 +5,44 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-
-//opsplit 
 class Patient {
-   static final int RETURN      = 0;
-   static final int SURNAME     = 1;
-   static final int FIRSTNAME   = 2;
-   static final int DATEOFBIRTH = 3; 
-   
-   int       id;
-   String    surname;
-   String    firstName;
-   LocalDate dateOfBirth;
-   double WEIGHT;
-   double LENGTH;
-   double Lunginhoud;
+    int id;
+    String surname;
+    String firstName;
+    LocalDate dateOfBirth;
+    double weight;
+    double height;
+    double lungCapacity;
 
-List<String> allergies = new ArrayList<>();
-List<String> medications = new ArrayList<>();
-List<String> consultNotes = new ArrayList<>();
-List<WeightEntry> weightHistory = new ArrayList<>();
+    List<String> allergies = new ArrayList<>();
+    List<String> medications = new ArrayList<>();
+    List<String> consultNotes = new ArrayList<>();
+    List<WeightEntry> weightHistory = new ArrayList<>();
 
-    /**
-     * Weight Entry class to store weight/length measurements with dates
-     */
     static class WeightEntry {
         LocalDate date;
         double weight;
-        double length;
-        
-        WeightEntry(LocalDate date, double weight, double length) {
+        double height;
+
+        WeightEntry(LocalDate date, double weight, double height) {
             this.date = date;
             this.weight = weight;
-            this.length = length;
+            this.height = height;
         }
-        
-        double calculateBmi() {
-            return weight / (length * length);
+
+        double getBmi() {
+            return weight / (height * height);
         }
     }
 
-
-    /**
-     * Constructor
-     */
-    Patient(int id, String surname, String firstName, LocalDate dateOfBirth, double WEIGHT, double LENGTH) {
+    Patient(int id, String surname, String firstName, LocalDate dateOfBirth, double weight, double height) {
         this.id = id;
         this.surname = surname;
         this.firstName = firstName;
         this.dateOfBirth = dateOfBirth;
-        this.WEIGHT = WEIGHT;
-        this.LENGTH = LENGTH;
-        this.medications = new ArrayList<>();
-        this.consultNotes = new ArrayList<>();
-        this.allergies = new ArrayList<>();
-        this.weightHistory = new ArrayList<>();
+        this.weight = weight;
+        this.height = height;
+        recordWeightEntry(LocalDate.now(), weight, height);
     }
 
     public int getAge(){
@@ -96,7 +79,7 @@ List<WeightEntry> weightHistory = new ArrayList<>();
         LocalDate consultDate = LocalDate.now();
         if (!dateInput.isEmpty()) {
             try {
-                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
                 consultDate = LocalDate.parse(dateInput, formatter);
             } catch (java.time.format.DateTimeParseException e) {
                 System.out.println("Invalid date format, using today.");
@@ -120,14 +103,14 @@ List<WeightEntry> weightHistory = new ArrayList<>();
     }
 
     void recordWeightEntry(LocalDate date, double weight, double length) {
-        this.WEIGHT = weight;
-        this.LENGTH = length;
+        this.weight = weight;
+        this.height = length;
         this.weightHistory.add(new WeightEntry(date, weight, length));
     }
 
     void recordWeightEntry(double weight, double length) {
-        this.WEIGHT = weight;
-        this.LENGTH = length;
+        this.weight = weight;
+        this.height = length;
         this.weightHistory.add(new WeightEntry(LocalDate.now(), weight, length));
     }
 
@@ -147,19 +130,19 @@ List<WeightEntry> weightHistory = new ArrayList<>();
         System.out.println("Allergie added");
     }
 
-void lungInfoInput (Scanner scanner){
-    if (scanner.hasNextLine()){
-        scanner.nextLine();
-    }
+    void lungInfoInput (Scanner scanner){
+        if (scanner.hasNextLine()){
+            scanner.nextLine();
+        }
 
-    System.out.println("Enter current lung capacity: ");
-            String lungs = scanner.nextLine();
-            if (!lungs.isEmpty()) {
-            Lunginhoud = Double.parseDouble(lungs);
-            }
+        System.out.println("Enter current lung capacity: ");
+        String lungs = scanner.nextLine();
+        if (!lungs.isEmpty()) {
+            this.lungCapacity = Double.parseDouble(lungs);
+        }
  
-            System.out.println("Lung capacity added!");
-}
+        System.out.println("Lung capacity added!");
+    }
 
     private boolean isPainReliever(String medication) {
         String lowerMed = medication.toLowerCase();
@@ -195,13 +178,13 @@ void lungInfoInput (Scanner scanner){
         System.out.format("%-17s %s\n", "First Name:", firstName);
         System.out.format("%-17s %s\n", "Date of birth:", dateOfBirth.format(formatter));
         System.out.format("%-17s %s\n", "Age:", getAge()); 
-        System.out.format("%-17s %s\n", "Weight:", WEIGHT);
-        System.out.format("%-17s %s\n", "Length:", LENGTH);
+        System.out.format("%-17s %.1f\n", "Weight:", weight);
+        System.out.format("%-17s %.2f\n", "Length:", height);
         List<String> visibleMeds = getFilteredMedications(user);
-        System.out.format("%-17s %.1f\n", "Current BMI:", (WEIGHT)/(LENGTH*LENGTH)); //%.1f\n is afronden op 1 decimaal
+        System.out.format("%-17s %.1f\n", "Current BMI:", weight / (height * height)); //%.1f\n is afronden op 1 decimaal
         System.out.format("%-17s %s\n", "Consult Notes:", consultNotes.isEmpty() ? "None" : String.join("; ", consultNotes));
         System.out.format("%-17s %s\n", "Allergies:", allergies);
-        System.out.format("%-17s %s\n", "Lung capacity", Lunginhoud);
+        System.out.format("%-17s %s\n", "Lung capacity", lungCapacity);
     }
 
     /**

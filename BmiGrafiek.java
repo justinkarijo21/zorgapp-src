@@ -15,18 +15,19 @@ public class BmiGrafiek {
         double maxBmi = Double.MIN_VALUE;
         
         for (Patient.WeightEntry entry : patient.weightHistory) {
-            double bmi = entry.calculateBmi();
+            double bmi = entry.getBmi();
             if (bmi < minBmi) minBmi = bmi;
             if (bmi > maxBmi) maxBmi = bmi;
         }
         
         minBmi = Math.max(0, minBmi - 2);
         maxBmi = maxBmi + 2;
+        if (maxBmi <= minBmi) {
+            maxBmi = minBmi + 0.1;
+        }
         
-
         int graphHeight = 20;
         
-     
         for (int row = graphHeight; row >= 0; row--) {
             double currentBmi = minBmi + (maxBmi - minBmi) * row / graphHeight;
             
@@ -39,7 +40,7 @@ public class BmiGrafiek {
             
          
             for (Patient.WeightEntry entry : patient.weightHistory) {
-                double bmi = entry.calculateBmi();
+                double bmi = entry.getBmi();
                 double normalizedBmi = (bmi - minBmi) / (maxBmi - minBmi);
                 int graphRow = (int) (normalizedBmi * graphHeight);
                 

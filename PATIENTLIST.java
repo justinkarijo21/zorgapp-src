@@ -105,18 +105,18 @@ public class PATIENTLIST{
             String newFirstname = edit.nextLine();
             if (!newFirstname.isEmpty()) admin.currentPatient.firstName = newFirstname;
 
-            System.out.print("Weight [" + admin.currentPatient.WEIGHT + "]: "); //gewicht bewerken
+            System.out.print("Weight [" + admin.currentPatient.weight + "]: "); //gewicht bewerken
             String weightInput = edit.nextLine();
-            double newWeight = admin.currentPatient.WEIGHT;
+            double newWeight = admin.currentPatient.weight;
             boolean weightChanged = false;
             if (!weightInput.isEmpty()) {
                 newWeight = Double.parseDouble(weightInput);
                 weightChanged = true;
             }
 
-            System.out.print("Length [" + admin.currentPatient.LENGTH + "]: "); //lengte bewerken
+            System.out.print("Length [" + admin.currentPatient.height + "]: "); //lengte bewerken
             String lengthInput = edit.nextLine();
-            double newLength = admin.currentPatient.LENGTH;
+            double newLength = admin.currentPatient.height;
             boolean lengthChanged = false;
             if (!lengthInput.isEmpty()) {
                 newLength = Double.parseDouble(lengthInput);
