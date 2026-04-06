@@ -182,6 +182,7 @@ class Patient {
         System.out.format("%-17s %.2f\n", "Length:", height);
         List<String> visibleMeds = getFilteredMedications(user);
         System.out.format("%-17s %.1f\n", "Current BMI:", weight / (height * height)); //%.1f\n is afronden op 1 decimaal
+        System.out.format("%-17s %s\n", "Medication:", visibleMeds.isEmpty() ? "None" : String.join("; ", visibleMeds));
         System.out.format("%-17s %s\n", "Consult Notes:", consultNotes.isEmpty() ? "None" : String.join("; ", consultNotes));
         System.out.format("%-17s %s\n", "Allergies:", allergies);
         System.out.format("%-17s %s\n", "Lung capacity", lungCapacity);
