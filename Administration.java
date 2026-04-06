@@ -97,7 +97,7 @@ public class Administration {
                     break;
 
                 case ADD_CONSULT:
-                    currentPatient.addConsultNoteInput(scanner);
+                    ConsultService.createConsultWithInput(scanner, currentPatient, currentUser);
                     break;
                 
                 case ADD_ALLERGIE:

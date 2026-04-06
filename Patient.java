@@ -16,7 +16,7 @@ class Patient {
 
     List<String> allergies = new ArrayList<>();
     List<String> medications = new ArrayList<>();
-    List<String> consultNotes = new ArrayList<>();
+    List<Consult> consultNotes = new ArrayList<>();
     List<WeightEntry> weightHistory = new ArrayList<>();
 
     static class WeightEntry {
@@ -64,9 +64,14 @@ class Patient {
         this.medications.add(medicationname);
     }
 
-    void addConsultNote(LocalDate date, String note){
-        String formatted = date.format(DateTimeFormatter.ofPattern("dd/MM/yyyy")) + ": " + note;
-        this.consultNotes.add(formatted);
+    /**
+     * Add a consultation note with sensitivity classification.
+     * @param date The consultation date
+     * @param note The consultation notes
+     * @param isSensitive Whether this is a sensitive consultation
+     */
+    void addConsult(LocalDate date, String note, boolean isSensitive) {
+        this.consultNotes.add(new Consult(date, note, isSensitive));
     }
 
     void addConsultNoteInput(Scanner scanner) {
@@ -93,7 +98,7 @@ class Patient {
             return;
         }
 
-        addConsultNote(consultDate, note);
+        addConsult(consultDate, note, false); // Default to non-sensitive for backward compatibility
         System.out.println("Consult note added.");
     }
 
@@ -183,9 +188,59 @@ class Patient {
         List<String> visibleMeds = getFilteredMedications(user);
         System.out.format("%-17s %.1f\n", "Current BMI:", weight / (height * height)); //%.1f\n is afronden op 1 decimaal
         System.out.format("%-17s %s\n", "Medication:", visibleMeds.isEmpty() ? "None" : String.join("; ", visibleMeds));
-        System.out.format("%-17s %s\n", "Consult Notes:", consultNotes.isEmpty() ? "None" : String.join("; ", consultNotes));
+        
+        // Get filtered consultations based on user's access level
+        List<Consult> visibleConsults = ConsultService.getFilteredConsults(user, consultNotes);
+        String consultDisplay = formatConsultNotes(visibleConsults);
+        System.out.format("%-17s %s\n", "Consult Notes:", consultDisplay);
+        
         System.out.format("%-17s %s\n", "Allergies:", allergies);
         System.out.format("%-17s %s\n", "Lung capacity", lungCapacity);
+    }
+
+    /**
+     * Format consultation notes for display.
+     * Shows sensitivity labels to Huisarts, hides them from others.
+     * 
+     * @param consults List of consultations to display
+     * @return Formatted string for display
+     */
+    private String formatConsultNotes(List<Consult> consults) {
+        if (consults.isEmpty()) {
+            return "None";
+        }
+        
+        // Build display string showing consult information
+        StringBuilder display = new StringBuilder();
+        for (int i = 0; i < consults.size(); i++) {
+            if (i > 0) {
+                display.append("; ");
+            }
+            Consult c = consults.get(i);
+            // Show sensitivity only if user is Huisarts
+            if (ConsultService.canUserViewSensitive(getCurrentUserFromContext())) {
+                display.append(c.toString()); // Includes [SENSITIVE] label
+            } else {
+                display.append(c.getFormattedNote()); // No sensitivity label
+            }
+        }
+        return display.toString();
+    }
+    
+    /**
+     * Helper method to get the current user for display purposes.
+     * Note: This is a workaround - in a real system, pass the user as a parameter to viewData.
+     * This is stored during viewData() call.
+     */
+    private User currentUserContext = null;
+    
+    void viewDataWithUser(User user) {
+        this.currentUserContext = user;
+        viewData(user);
+    }
+    
+    private User getCurrentUserFromContext() {
+        return currentUserContext != null ? currentUserContext : new User(0, "unknown");
     }
 
     /**

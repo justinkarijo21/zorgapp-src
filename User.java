@@ -47,6 +47,18 @@ public class User {
     public boolean canAddLungInfo(){
         return false;
     }
+
+    public boolean canViewConsultations() {
+        return false;
+    }
+
+    public boolean canCreateConsultations() {
+        return false;
+    }
+
+    public boolean canViewSensitiveConsultations() {
+        return false;
+    }
 }
 
 //classes rollen met verschillende permissies, deze worden gebruikt om te bepalen welke opties er in het menu worden getoond voor de verschillende users, en welke acties ze kunnen uitvoeren op de patient data.
@@ -79,6 +91,21 @@ class Huisarts extends User{
     public boolean canAddAllergie() {
         return true;
     }
+
+    @Override
+    public boolean canViewConsultations() {
+        return true;
+    }
+
+    @Override
+    public boolean canCreateConsultations() {
+        return true;
+    }
+
+    @Override
+    public boolean canViewSensitiveConsultations() {
+        return true; // Huisarts can see sensitive consultations
+    }
 }
 
 class Fysio extends User{
@@ -100,6 +127,21 @@ class Fysio extends User{
     public boolean canAddLungInfo(){
         return true;
     }
+
+    @Override
+    public boolean canViewConsultations() {
+        return true;
+    }
+
+    @Override
+    public boolean canCreateConsultations() {
+        return true;
+    }
+
+    @Override
+    public boolean canViewSensitiveConsultations() {
+        return false; // Fysio cannot see sensitive consultations
+    }
 }
 
 class Apotheker extends User{
@@ -120,7 +162,23 @@ class Apotheker extends User{
     @Override
     public boolean canEditMedication() {
         return true;
-    }}
+    }
+
+    @Override
+    public boolean canViewConsultations() {
+        return true;
+    }
+
+    @Override
+    public boolean canCreateConsultations() {
+        return true;
+    }
+
+    @Override
+    public boolean canViewSensitiveConsultations() {
+        return false; // Apotheker cannot see sensitive consultations
+    }
+}
 
 class Tandarts extends User{
     public Tandarts (int id, String name){
