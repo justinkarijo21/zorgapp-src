@@ -26,7 +26,7 @@ class Consult {
         return date.format(formatter) + ": " + sensitivityLabel + " " + note;
     }
     
-
+//test
     String getFormattedNote() {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         return date.format(formatter) + ": " + note;
