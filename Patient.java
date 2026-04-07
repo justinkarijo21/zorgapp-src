@@ -186,61 +186,16 @@ class Patient {
         System.out.format("%-17s %.1f\n", "Weight:", weight);
         System.out.format("%-17s %.2f\n", "Length:", height);
         List<String> visibleMeds = getFilteredMedications(user);
-        System.out.format("%-17s %.1f\n", "Current BMI:", weight / (height * height)); //%.1f\n is afronden op 1 decimaal
+        System.out.format("%-17s %.1f\n", "Current BMI:", weight / (height * height));
         System.out.format("%-17s %s\n", "Medication:", visibleMeds.isEmpty() ? "None" : String.join("; ", visibleMeds));
-        
+
         // Get filtered consultations based on user's access level
-        List<Consult> visibleConsults = ConsultService.getFilteredConsults(user, consultNotes);
-        String consultDisplay = formatConsultNotes(visibleConsults);
+        List<Consult> visibleConsults = ConsultService.filterConsultsForUser(user, consultNotes);
+        String consultDisplay = ConsultFormatter.formatConsultList(user, visibleConsults);
         System.out.format("%-17s %s\n", "Consult Notes:", consultDisplay);
-        
+
         System.out.format("%-17s %s\n", "Allergies:", allergies);
         System.out.format("%-17s %s\n", "Lung capacity", lungCapacity);
-    }
-
-    /**
-     * Format consultation notes for display.
-     * Shows sensitivity labels to Huisarts, hides them from others.
-     * 
-     * @param consults List of consultations to display
-     * @return Formatted string for display
-     */
-    private String formatConsultNotes(List<Consult> consults) {
-        if (consults.isEmpty()) {
-            return "None";
-        }
-        
-        // Build display string showing consult information
-        StringBuilder display = new StringBuilder();
-        for (int i = 0; i < consults.size(); i++) {
-            if (i > 0) {
-                display.append("; ");
-            }
-            Consult c = consults.get(i);
-            // Show sensitivity only if user is Huisarts
-            if (ConsultService.canUserViewSensitive(getCurrentUserFromContext())) {
-                display.append(c.toString()); // Includes [SENSITIVE] label
-            } else {
-                display.append(c.getFormattedNote()); // No sensitivity label
-            }
-        }
-        return display.toString();
-    }
-    
-    /**
-     * Helper method to get the current user for display purposes.
-     * Note: This is a workaround - in a real system, pass the user as a parameter to viewData.
-     * This is stored during viewData() call.
-     */
-    private User currentUserContext = null;
-    
-    void viewDataWithUser(User user) {
-        this.currentUserContext = user;
-        viewData(user);
-    }
-    
-    private User getCurrentUserFromContext() {
-        return currentUserContext != null ? currentUserContext : new User(0, "unknown");
     }
 
     /**

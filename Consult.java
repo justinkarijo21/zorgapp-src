@@ -1,38 +1,42 @@
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
-
 class Consult {
-    LocalDate date;
-    String note;
-    boolean isSensitive;
-    
-    // Types of consultations
-    static final boolean SENSITIVE = true;
-    static final boolean NON_SENSITIVE = false;
+    private static final DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
-    
-    Consult(LocalDate date, String note, boolean isSensitive) {
+    private final LocalDate date;
+    private final String note;
+    private final boolean sensitive;
+
+    Consult(LocalDate date, String note, boolean sensitive) {
         this.date = date;
         this.note = note;
-        this.isSensitive = isSensitive;
+        this.sensitive = sensitive;
     }
 
-    
+    LocalDate getDate() {
+        return date;
+    }
+
+    String getNote() {
+        return note;
+    }
+
+    boolean isSensitive() {
+        return sensitive;
+    }
+
     @Override
     public String toString() {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-        String sensitivityLabel = isSensitive ? "[SENSITIVE]" : "[NON-SENSITIVE]";
-        return date.format(formatter) + ": " + sensitivityLabel + " " + note;
+        String sensitivityLabel = sensitive ? "[SENSITIVE]" : "[NON-SENSITIVE]";
+        return formatDate() + ": " + sensitivityLabel + " " + note;
     }
-    
-//test
+
     String getFormattedNote() {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-        return date.format(formatter) + ": " + note;
+        return formatDate() + ": " + note;
     }
-    
-    public boolean isSensitive() {
-        return isSensitive;
+
+    private String formatDate() {
+        return date.format(DATE_FORMATTER);
     }
 }
